@@ -4,12 +4,12 @@
 
 ## Divisão das Duplas
 
-| Dupla | Responsabilidade |
-|-------|------------------|
-| Dupla 1 | Usuários e Autenticação | Vitória e Camila |
-| Dupla 2 | Abertura e Comunicação | Gustavo e Rafael |
-| Dupla 3 | Gerenciamento e Painel Técnico | Paulo e Vitor |
-| Dupla 4 | Categorias, Prioridades, Dashboard e Base | Gabriel e Murilo |
+| Dupla | Integrantes | Responsabilidade |
+|-------|-------------|------------------|
+| Dupla 1 | Vitória e Camila | Usuários e Autenticação |
+| Dupla 2 | Gustavo e Rafael | Abertura e Comunicação |
+| Dupla 3 | Paulo e Vitor | Gerenciamento e Painel Técnico |
+| Dupla 4 | Gabriel e Murilo | Categorias, Prioridades, Dashboard e Base |
 
 ---
 
