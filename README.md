@@ -6,10 +6,10 @@
 
 | Dupla | Responsabilidade |
 |-------|------------------|
-| Dupla 1 | Usuários e Autenticação |
-| Dupla 2 | Abertura e Comunicação |
-| Dupla 3 | Gerenciamento e Painel Técnico |
-| Dupla 4 | Categorias, Prioridades, Dashboard e Base |
+| Dupla 1 | Usuários e Autenticação | Vitória e Camila |
+| Dupla 2 | Abertura e Comunicação | Gustavo e Rafael |
+| Dupla 3 | Gerenciamento e Painel Técnico | Paulo e Vitor |
+| Dupla 4 | Categorias, Prioridades, Dashboard e Base | Gabriel e Murilo |
 
 ---
 
