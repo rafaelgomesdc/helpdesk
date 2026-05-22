@@ -25,13 +25,6 @@
 - [ ] Sistema de perfis (admin, tecnico, solicitante)
 - [ ] Regras de permissão
 
-### Dependências
-- Nenhuma (primeira fase)
-
-### Entregáveis
-- [ ] API de usuários funcionando
-- [ ] Login retornando sessão/token
-
 ---
 
 ## ✅ Dupla 2 – Abertura e Comunicação
@@ -44,15 +37,6 @@
 - [ ] Adicionar comentários no chamado
 - [ ] Exibir histórico de interações (linha do tempo)
 
-### Dependências
-- Precisa da Dupla 1 (usuários logados)
-- Precisa da Dupla 4 (categorias e prioridades)
-
-### Entregáveis
-- [ ] Solicitante consegue abrir chamado
-- [ ] Upload de arquivos funcionando
-- [ ] Histórico de interações visível
-
 ---
 
 ## ✅ Dupla 3 – Gerenciamento e Painel Técnico
@@ -64,15 +48,6 @@
 - [ ] Alterar status (Aberto → Em andamento → Resolvido → Fechado)
 - [ ] Tela para registrar solução (texto + opcional anexo)
 - [ ] Histórico de atendimento (ações e horários)
-
-### Dependências
-- Precisa da Dupla 1 (usuários e perfis)
-- Precisa da Dupla 2 (chamados criados)
-
-### Entregáveis
-- [ ] Técnico consegue assumir chamado
-- [ ] Status atualiza corretamente
-- [ ] Solução é salva no histórico
 
 ---
 
@@ -93,14 +68,5 @@
 #### Base de Conhecimento (Opcional)
 - [ ] CRUD de FAQs
 - [ ] CRUD de artigos (título, conteúdo, categoria)
-
-### Dependências
-- Categorias/prioridades: precisa da Dupla 1 (admin)
-- Dashboard: precisa da Dupla 3 (chamados finalizados)
-
-### Entregáveis
-- [ ] Admin consegue criar/editar categorias e prioridades
-- [ ] Dashboard com gráficos funcionando
-- [ ] (Opcional) Base de conhecimento visível para usuários
 
 ---
