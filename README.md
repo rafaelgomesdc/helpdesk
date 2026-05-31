@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
@@ -57,3 +58,77 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+=======
+# helpdesk
+
+# Sistema de Gerenciamento de Chamados (Help Desk)
+
+## Divisão das Duplas
+
+| Dupla | Integrantes | Responsabilidade |
+|-------|-------------|------------------|
+| Dupla 1 | Vitória e Camila | Usuários e Autenticação |
+| Dupla 2 | Gustavo e Rafael | Abertura e Comunicação |
+| Dupla 3 | Paulo e Vitor | Gerenciamento e Painel Técnico |
+| Dupla 4 | Gabriel e Murilo | Categorias, Prioridades, Dashboard e Base |
+
+---
+
+## ✅ Dupla 1 – Usuários e Autenticação
+
+### Checklist
+- [ ] Criar banco de dados (tabelas: usuarios, setores, cargos, perfis)
+- [ ] CRUD de setores (criar, editar, listar, excluir)
+- [ ] CRUD de cargos
+- [ ] CRUD de usuários (nome, email, senha, setor, cargo, contato)
+- [ ] Tela de login (email + senha)
+- [ ] Tela de logout
+- [ ] Sistema de perfis (admin, tecnico, solicitante)
+- [ ] Regras de permissão
+
+---
+
+## ✅ Dupla 2 – Abertura e Comunicação
+
+### Checklist
+- [ ] Tela para abrir chamado (título, descrição, categoria, prioridade)
+- [ ] Upload de anexos no chamado
+- [ ] Listar "meus chamados" (para solicitante)
+- [ ] Visualizar detalhes de um chamado
+- [ ] Adicionar comentários no chamado
+- [ ] Exibir histórico de interações (linha do tempo)
+
+---
+
+## ✅ Dupla 3 – Gerenciamento e Painel Técnico
+
+### Checklist
+- [ ] Listar chamados pendentes (para técnico)
+- [ ] Listar chamados em atendimento (técnico já assumiu)
+- [ ] Botão "Atribuir para mim" (técnico assume chamado)
+- [ ] Alterar status (Aberto → Em andamento → Resolvido → Fechado)
+- [ ] Tela para registrar solução (texto + opcional anexo)
+- [ ] Histórico de atendimento (ações e horários)
+
+---
+
+## ✅ Dupla 4 – Categorias, Prioridades, Dashboard e Base
+
+### Checklist
+
+#### Categorias e Prioridades (Fase 2)
+- [ ] CRUD de categorias (Hardware, Software, Rede, etc.)
+- [ ] CRUD de prioridades (Baixa, Média, Alta, Crítica)
+
+#### Dashboard e Relatórios (Fase 4)
+- [ ] Dashboard: total de chamados abertos
+- [ ] Dashboard: total de chamados finalizados
+- [ ] Gráfico de chamados por categoria
+- [ ] Relatório: tempo médio de atendimento
+
+#### Base de Conhecimento (Opcional)
+- [ ] CRUD de FAQs
+- [ ] CRUD de artigos (título, conteúdo, categoria)
+
+---
+>>>>>>> ba508754e6d749c9c0de16577c291c8aa4198efd
