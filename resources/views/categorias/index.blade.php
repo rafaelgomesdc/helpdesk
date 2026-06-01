@@ -2,11 +2,26 @@
 @section('title', 'Categorias')
 @section('content')
 
-    <h2>Categorias</h2>
-    <a class="button" href="{{ route('categorias.create') }}">Nova Categoria</a>
+<div class="page-header">
+    <div>
+        <h1 class="page-title">Categorias</h1>
+        <p class="page-subtitle">Gerencie as categorias de chamados do sistema</p>
+    </div>
+    <a href="{{ route('categorias.create') }}" class="btn btn-primary">
+        + Nova Categoria
+    </a>
+</div>
+
+<div class="table-wrap">
+    <div class="table-header">
+        <span class="table-title">{{ $categorias->count() }} categoria(s) cadastrada(s)</span>
+    </div>
 
     @if($categorias->isEmpty())
-        <p>Nenhuma categoria cadastrada.</p>
+        <div class="empty-state">
+            <div class="empty-icon">🗂️</div>
+            <div class="empty-text">Nenhuma categoria cadastrada ainda.</div>
+        </div>
     @else
         <table>
             <thead>
@@ -19,20 +34,28 @@
             <tbody>
                 @foreach($categorias as $c)
                 <tr>
-                    <td>{{ $c->nome }}</td>
+                    <td style="font-weight:600; color:var(--text-primary);">{{ $c->nome }}</td>
                     <td>{{ $c->descricao ?? '—' }}</td>
                     <td>
-                        <a class="button" href="{{ route('categorias.edit', $c) }}">Editar</a>
-                        <form action="{{ route('categorias.destroy', $c) }}" method="POST" style="display:inline">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" onclick="return confirm('Excluir esta categoria?')">Excluir</button>
-                        </form>
+                        <div style="display:flex; gap:6px;">
+                            <a href="{{ route('categorias.edit', $c) }}" class="btn btn-ghost btn-sm">
+                                ✏️ Editar
+                            </a>
+                            <form action="{{ route('categorias.destroy', $c) }}" method="POST" style="display:inline">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-sm"
+                                    onclick="return confirm('Excluir a categoria {{ $c->nome }}?')">
+                                    🗑 Excluir
+                                </button>
+                            </form>
+                        </div>
                     </td>
                 </tr>
                 @endforeach
             </tbody>
         </table>
     @endif
+</div>
 
 @endsection
