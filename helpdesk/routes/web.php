@@ -1,29 +1,60 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\RoleController;
+
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Auth\ResetPasswordController;
 
 Route::get('/', function () {
-    return redirect('/login');
+    return redirect()->route('login');
 });
 
-Route::get('/login', [AuthController::class, 'loginTela'])->name('login');
-Route::post('/login', [AuthController::class, 'login'])->name('login.entrar');
-Route::post('/login-teste', [AuthController::class, 'loginTeste'])->name('login.teste');
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-Route::resource('roles', RoleController::class);
+/*
+|--------------------------------------------------------------------------
+| LOGIN
+|--------------------------------------------------------------------------
+*/
+
+Route::get('/login', [LoginController::class, 'index'])
+    ->name('login');
+
+Route::post('/login', [LoginController::class, 'login'])
+    ->name('login.auth');
+
+Route::post('/logout', [LoginController::class, 'logout'])
+    ->name('logout');
+
+/*
+|--------------------------------------------------------------------------
+| CADASTRO
+|--------------------------------------------------------------------------
+*/
+
+Route::get('/cadastrar', [RegisterController::class, 'index'])
+    ->name('register.form');
+
+Route::post('/cadastrar', [RegisterController::class, 'store'])
+    ->name('register');
+
+/*
+|--------------------------------------------------------------------------
+| RESET PASSWORD
+|--------------------------------------------------------------------------
+*/
+
+Route::get('/reset-password', [ResetPasswordController::class, 'index'])
+    ->name('password.request');
+
+Route::post('/reset-password', [ResetPasswordController::class, 'ajax'])
+    ->name('password.ajax');
+
+/*
+|--------------------------------------------------------------------------
+| DASHBOARD
+|--------------------------------------------------------------------------
+*/
 
 Route::get('/dashboard', function () {
-    return 'Você está logado!';
-})->middleware('auth');
-
-Route::middleware(['auth', 'role:admin'])->group(function () {
-    Route::get('/admin', function () {
-        return 'Área do admin';
-    });
-});
-
-use App\Http\Controllers\PermissionController;
-
-Route::resource('permissions', PermissionController::class);
+    return view('dashboard');
+})->middleware('auth')->name('dashboard');
