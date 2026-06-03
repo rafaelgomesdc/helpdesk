@@ -15,7 +15,7 @@
         <a class="navbar-brand" href="{{ route('users.index') }}">Help Desk</a>
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav me-auto">
-                
+
                 <!-- APARECE APENAS SE FOR ADMIN OU TÉCNICO -->
                 @if(session('user_role') == 'admin' || session('user_role') == 'technician')
                     <li class="nav-item">
@@ -39,9 +39,24 @@
                         <a class="nav-link" href="{{ route('setores.index') }}">Setores</a>
                     </li>
                 @endif
+
+                {{-- Base de Conhecimento: visível para todos --}}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                        Base de Conhecimento
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{{ route('faqs.index') }}">FAQs</a></li>
+                        <li><a class="dropdown-item" href="{{ route('artigos.index') }}">Artigos</a></li>
+                        @if(session('user_role') == 'admin')
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="{{ route('categorias.index') }}">Categorias</a></li>
+                        @endif
+                    </ul>
+                </li>
+
             </ul>
 
-                
             <ul class="navbar-nav">
                 <li class="nav-item">
                     <span class="nav-link text-white">Olá, {{ session('user_name') }}</span>
@@ -67,6 +82,13 @@
         @if(session('erro'))
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
                 {{ session('erro') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        @endif
+
+        @if(session('aviso'))
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                {{ session('aviso') }}
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
         @endif
