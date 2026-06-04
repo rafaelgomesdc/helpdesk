@@ -17,10 +17,19 @@
         </div>
 
         <nav class="menu">
-            <a href="#">Dashboard</a>
-            <a href="#">Pendentes</a>
-            <a href="#">Em Atendimento</a>
-            <a href="#">Histórico</a>
+            <a href="/">Dashboard</a>
+
+            <a href="/tecnico/pendentes">
+                Pendentes
+            </a>
+
+            <a href="/tecnico/em-atendimento">
+                Em Atendimento
+            </a>
+
+            <a href="/tecnico/historico/1">
+                Histórico
+            </a>
         </nav>
 
     </aside>

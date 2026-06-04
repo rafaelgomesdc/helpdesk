@@ -162,3 +162,70 @@ tr:hover{
     background:#22c55e33;
     color:#22c55e;
 }
+
+
+
+
+
+
+.dashboard {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.page-header h1 {
+    font-size: 38px;
+    margin-bottom: 8px;
+}
+
+.page-header p {
+    color: #94a3b8;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.stat-card {
+    background: #0f172a;
+    border-radius: 16px;
+    padding: 24px;
+    border: 1px solid #1e293b;
+}
+
+.stat-card h2 {
+    font-size: 48px;
+    margin: 12px 0;
+}
+
+.stat-label {
+    font-size: 12px;
+    letter-spacing: 2px;
+    color: #94a3b8;
+}
+
+.card-blue {
+    border-top: 3px solid #3b82f6;
+}
+
+.card-yellow {
+    border-top: 3px solid #facc15;
+}
+
+.card-green {
+    border-top: 3px solid #22c55e;
+}
+
+.card-red {
+    border-top: 3px solid #ef4444;
+}
+
+.table-card {
+    background: #0f172a;
+    padding: 24px;
+    border-radius: 16px;
+    border: 1px solid #1e293b;
+}
