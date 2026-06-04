@@ -1,21 +1,43 @@
-<h1>Chamados em Atendimento</h1>
+@extends('layouts.app')
 
-<table border="1">
+@section('content')
 
-    <tr>
-        <th>ID</th>
-        <th>Título</th>
-        <th>Prioridade</th>
-    </tr>
+<h1 class="page-title">
+    Chamados em Atendimento
+</h1>
+
+<p class="subtitle">
+    Chamados atualmente em análise.
+</p>
+
+<div class="table-card">
+
+<table>
+
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Título</th>
+            <th>Prioridade</th>
+        </tr>
+    </thead>
+
+    <tbody>
 
     @foreach($tickets as $ticket)
 
         <tr>
-            <td>{{ $ticket->id }}</td>
+            <td>#{{ $ticket->id }}</td>
             <td>{{ $ticket->title }}</td>
             <td>{{ $ticket->priority }}</td>
         </tr>
 
     @endforeach
 
+    </tbody>
+
 </table>
+
+</div>
+
+@endsection

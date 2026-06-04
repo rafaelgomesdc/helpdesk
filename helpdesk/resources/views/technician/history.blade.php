@@ -1,14 +1,28 @@
-<h1>Histórico do Chamado</h1>
+@extends('layouts.app')
 
-<h2>{{ $ticket->title }}</h2>
+@section('content')
 
-<table border="1">
+<h1 class="page-title">
+    Histórico do Chamado
+</h1>
 
-    <tr>
-        <th>Ação</th>
-        <th>Descrição</th>
-        <th>Data</th>
-    </tr>
+<p class="subtitle">
+    {{ $ticket->title }}
+</p>
+
+<div class="table-card">
+
+<table>
+
+    <thead>
+        <tr>
+            <th>Ação</th>
+            <th>Descrição</th>
+            <th>Data</th>
+        </tr>
+    </thead>
+
+    <tbody>
 
     @foreach($ticket->histories as $history)
 
@@ -20,4 +34,10 @@
 
     @endforeach
 
-</table>    
+    </tbody>
+
+</table>
+
+</div>
+
+@endsection
