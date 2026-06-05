@@ -1,0 +1,54 @@
+.formAbrirChamado {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    background-color: var(--bg-card);
+    padding: 2%;
+    color: var(--text-primary);
+    font-size: 20px;
+    border-radius: 16px;
+    margin-top: 20px;
+}
+
+.select {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.selectItem {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    width: 30%;
+    font-size: 20px;
+}
+
+.selectItem select {
+    padding: 3%;
+}
+
+
+.formAbrirChamado input, select {
+    padding: 1%;
+    background-color: var(--bg-secondary);
+    border-style: solid;
+    border-color: var(--border-color);
+    border-radius: 16px;
+    color: var(--text-primary);
+    font-size: 20px;
+}
+
+.formAbrirChamado button {
+    width: fit-content;
+    justify-content: center;
+    align-self: center;
+    font-size: 20px;
+}
+
+.anexos {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 20px;
+}

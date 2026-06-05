@@ -76,6 +76,8 @@
         .empty-icon { font-size:32px; margin-bottom:12px; }
         .empty-text { font-size:14px; }
     </style>
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/aberturaChamados.css">
 </head>
 <body>
 <header class="header">
