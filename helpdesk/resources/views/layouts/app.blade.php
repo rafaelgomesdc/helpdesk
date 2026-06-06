@@ -86,7 +86,21 @@
             <div class="hbrand-sub">Portal de Suporte</div>
         </div>
     </div>
+<<<<<<< HEAD
     <span class="hbadge">Fatec Prudente</span>
+=======
+    <div style="display:flex; align-items:center; gap:12px;">
+        @auth
+            <span class="hbadge">{{ auth()->user()->name }}</span>
+            <form method="POST" action="{{ route('logout') }}" style="margin:0;">
+                @csrf
+                <button type="submit" class="btn btn-ghost btn-sm" style="cursor:pointer;">Sair</button>
+            </form>
+        @else
+            <span class="hbadge">Fatec Prudente</span>
+        @endauth
+    </div>
+>>>>>>> UsuariosVitoria
 </header>
 <div class="layout">
     <aside class="sidebar">
