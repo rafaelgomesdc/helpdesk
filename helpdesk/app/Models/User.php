@@ -12,7 +12,7 @@ class User extends Authenticatable
 
     protected $fillable = [
         'name', 'email', 'password', 'security_question', 'security_answer',
-        'status', 'profile', 'sector_id', 'cargo_id', 'phone',
+        'status', 'profile', 'phone', 'address', 'setor_id', 'cargo_id', 'role_id',
     ];
 
     protected $hidden = ['password', 'security_answer', 'remember_token'];
@@ -25,5 +25,34 @@ class User extends Authenticatable
     public function verifySecurityAnswer($plainAnswer)
     {
         return Hash::check(strtolower(trim($plainAnswer)), $this->security_answer);
+    }
+
+    public function setor()
+    {
+        return $this->belongsTo(Setor::class);
+    }
+
+    public function cargo()
+    {
+        return $this->belongsTo(Cargo::class);
+    }
+
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->profile === 'Admin';
+    }
+
+    public function hasPermission(string $permission): bool
+    {
+        if ($this->isAdmin()) {
+            return true;
+        }
+
+        return $this->role?->permissions->contains('name', $permission) ?? false;
     }
 }

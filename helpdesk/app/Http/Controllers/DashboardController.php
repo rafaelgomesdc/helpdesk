@@ -8,13 +8,8 @@ class DashboardController extends Controller
 {
     public function index()
     {
-<<<<<<< HEAD
-        $totalAbertos     = DB::table('tickets')->where('status', 'open')->count();
-        $totalAndamento   = DB::table('tickets')->where('status', 'in_progress')->count();
-=======
         $totalAbertos = DB::table('tickets')->where('status', 'open')->count();
         $totalAndamento = DB::table('tickets')->where('status', 'in_progress')->count();
->>>>>>> UsuariosVitoria
         $totalFinalizados = DB::table('tickets')->whereIn('status', ['resolved', 'closed'])->count();
 
         $porCategoria = DB::table('categorias')
@@ -24,12 +19,6 @@ class DashboardController extends Controller
             ->orderByDesc('total')
             ->get();
 
-<<<<<<< HEAD
-        $tempoMedio = DB::table('tickets')
-            ->whereNotNull('resolved_at')
-            ->selectRaw('AVG(TIMESTAMPDIFF(HOUR, created_at, resolved_at)) as media')
-            ->value('media');
-=======
         $driver = DB::connection()->getDriverName();
 
         $tempoMedio = $driver === 'sqlite'
@@ -41,7 +30,6 @@ class DashboardController extends Controller
                 ->whereNotNull('resolved_at')
                 ->selectRaw('AVG(TIMESTAMPDIFF(HOUR, created_at, resolved_at)) as media')
                 ->value('media');
->>>>>>> UsuariosVitoria
 
         $tempoMedio = round($tempoMedio ?? 0, 1);
 
@@ -53,8 +41,4 @@ class DashboardController extends Controller
             'tempoMedio'
         ));
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> UsuariosVitoria

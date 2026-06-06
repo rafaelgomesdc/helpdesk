@@ -11,8 +11,4 @@
     <textarea name="descricao" class="form-textarea"
         placeholder="Descreva brevemente o tipo de chamados desta categoria...">{{ old('descricao', $categoria->descricao ?? '') }}</textarea>
     @error('descricao') <div class="form-error">⚠ {{ $message }}</div> @enderror
-<<<<<<< HEAD
 </div>
-=======
-</div>
->>>>>>> UsuariosVitoria

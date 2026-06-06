@@ -9,10 +9,6 @@
     </div>
 </div>
 
-<<<<<<< HEAD
-{{-- CARDS DE TOTAIS --}}
-=======
->>>>>>> UsuariosVitoria
 <div class="stats-grid">
     <div class="stat-card blue">
         <div class="stat-label">Abertos</div>
@@ -36,10 +32,6 @@
     </div>
 </div>
 
-<<<<<<< HEAD
-{{-- CHAMADOS POR CATEGORIA --}}
-=======
->>>>>>> UsuariosVitoria
 <div class="table-wrap">
     <div class="table-header">
         <span class="table-title">Chamados por Categoria</span>
@@ -70,8 +62,4 @@
     </div>
 </div>
 
-<<<<<<< HEAD
 @endsection
-=======
-@endsection
->>>>>>> UsuariosVitoria
