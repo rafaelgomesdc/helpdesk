@@ -12,7 +12,7 @@
 
 .select {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
 }
 
@@ -29,7 +29,7 @@
 }
 
 
-.formAbrirChamado input, select {
+.formAbrirChamado input, select, textarea {
     padding: 1%;
     background-color: var(--bg-secondary);
     border-style: solid;

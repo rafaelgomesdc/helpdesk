@@ -27,7 +27,7 @@
             <p>Título</p>
             <input type="text" name="tituloChamado">
             <p>Descrição</p>
-            <input type="text" name="descChamado">
+            <textarea name="descChamado" id="" cols="30" rows="5"></textarea>
             <p>Anexos</p>
             <div class="anexos" id="anexos">
                 <input type="file" name="anexoChamado" id="">
