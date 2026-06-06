@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@push('styles')
+    <link rel="stylesheet" href="/css/aberturaChamados.css">
+@endpush
+
 @section('content')
     <h1>Abrir Chamado</h1>
     <form action="/" method="GET">

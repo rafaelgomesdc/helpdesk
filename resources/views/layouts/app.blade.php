@@ -77,7 +77,7 @@
         .empty-text { font-size:14px; }
     </style>
     <link rel="stylesheet" href="/css/base.css">
-    <link rel="stylesheet" href="/css/aberturaChamados.css">
+    @stack('styles')
 </head>
 <body>
 <header class="header">

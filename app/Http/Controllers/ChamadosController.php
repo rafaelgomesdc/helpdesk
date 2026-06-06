@@ -12,4 +12,13 @@ class ChamadosController extends Controller
         $categorias = Categoria::orderBy('nome')->get();
         return view('solicitante.abrirChamado', compact('categorias'));
     }
+
+    public function viewListarChamados(){
+        $chamados = [];
+        return view('solicitante.listarChamados', compact('chamados'));
+    }
+    
+    public function viewComunicacaoChamados(){
+        return view('solicitante.comunicacaoChamado');
+    }
 }
