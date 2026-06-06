@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 class CategoriaController extends Controller
 {
+<<<<<<< HEAD
     // LISTAR
     public function index()
     {
@@ -15,16 +16,32 @@ class CategoriaController extends Controller
     }
 
     // FORM CRIAR
+=======
+    public function index()
+    {
+        $categorias = Categoria::orderBy('nome')->get();
+
+        return view('categorias.index', compact('categorias'));
+    }
+
+>>>>>>> UsuariosVitoria
     public function create()
     {
         return view('categorias.create');
     }
 
+<<<<<<< HEAD
     // SALVAR
     public function store(Request $request)
     {
         $dados = $request->validate([
             'nome'      => ['required', 'min:2', 'max:100'],
+=======
+    public function store(Request $request)
+    {
+        $dados = $request->validate([
+            'nome' => ['required', 'min:2', 'max:100'],
+>>>>>>> UsuariosVitoria
             'descricao' => ['nullable', 'min:3'],
         ]);
 
@@ -34,17 +51,27 @@ class CategoriaController extends Controller
             ->with('sucesso', 'Categoria cadastrada com sucesso!');
     }
 
+<<<<<<< HEAD
     // FORM EDITAR
+=======
+>>>>>>> UsuariosVitoria
     public function edit(Categoria $categoria)
     {
         return view('categorias.edit', compact('categoria'));
     }
 
+<<<<<<< HEAD
     // ATUALIZAR
     public function update(Request $request, Categoria $categoria)
     {
         $dados = $request->validate([
             'nome'      => ['required', 'min:2', 'max:100'],
+=======
+    public function update(Request $request, Categoria $categoria)
+    {
+        $dados = $request->validate([
+            'nome' => ['required', 'min:2', 'max:100'],
+>>>>>>> UsuariosVitoria
             'descricao' => ['nullable', 'min:3'],
         ]);
 
@@ -54,7 +81,10 @@ class CategoriaController extends Controller
             ->with('sucesso', 'Categoria atualizada com sucesso!');
     }
 
+<<<<<<< HEAD
     // EXCLUIR
+=======
+>>>>>>> UsuariosVitoria
     public function destroy(Categoria $categoria)
     {
         $categoria->delete();
@@ -62,4 +92,8 @@ class CategoriaController extends Controller
         return redirect()->route('categorias.index')
             ->with('sucesso', 'Categoria removida com sucesso!');
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> UsuariosVitoria

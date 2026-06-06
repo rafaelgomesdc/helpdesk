@@ -2,6 +2,7 @@
 @section('title', 'Nova Categoria')
 @section('content')
 
+<<<<<<< HEAD
     <h2>Cadastrar Categoria</h2>
     <form action="{{ route('categorias.store') }}" method="POST">
         @include('categorias._form')
@@ -13,6 +14,8 @@
 @section('title', 'Nova Categoria')
 @section('content')
 
+=======
+>>>>>>> UsuariosVitoria
 <div class="page-header">
     <div>
         <h1 class="page-title">Nova Categoria</h1>
@@ -30,4 +33,8 @@
     </form>
 </div>
 
+<<<<<<< HEAD
 @endsection
+=======
+@endsection
+>>>>>>> UsuariosVitoria
