@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Cargo;
+use App\Models\Setor;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -11,7 +13,10 @@ class RegisterController extends Controller
 {
     public function index()
     {
-        return view('auth.register');
+        $setores = Setor::orderBy('nome')->get();
+        $cargos = Cargo::orderBy('nome')->get();
+
+        return view('auth.register', compact('setores', 'cargos'));
     }
 
     public function store(Request $request)
@@ -21,8 +26,9 @@ class RegisterController extends Controller
             'email' => 'required|email|unique:users,email',
             'password' => 'required|string|min:6',
             'contact' => 'required|string|max:30',
-            'sector' => 'required|string|max:255',
-            'cargo' => 'required|string|max:255',
+            'address' => 'nullable|string|max:255',
+            'setor_id' => 'required|exists:setores,id',
+            'cargo_id' => 'required|exists:cargos,id',
             'profile' => 'required|string|in:Usuário,Técnico,Admin',
             'question' => 'required|string|max:255',
             'answer' => 'required|string|min:2|max:255',
@@ -33,8 +39,9 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'phone' => $data['contact'],
-            'sector_id' => $data['sector'],
-            'cargo_id' => $data['cargo'],
+            'address' => $data['address'] ?? null,
+            'setor_id' => $data['setor_id'],
+            'cargo_id' => $data['cargo_id'],
             'profile' => $data['profile'],
             'security_question' => $data['question'],
             'security_answer' => $data['answer'],

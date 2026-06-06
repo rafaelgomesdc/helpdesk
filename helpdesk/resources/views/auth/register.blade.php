@@ -42,21 +42,27 @@
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
           <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Setor / Departamento</label>
-          <select name="sector" class="w-full bg-slate-950/80 border border-slate-800 rounded-xl px-4 py-2.5 text-slate-300 text-xs focus:outline-none focus:border-emerald-500 transition-colors cursor-pointer" required>
-            <option value="" disabled {{ old('sector') ? '' : 'selected' }}>Selecione um setor...</option>
-            <option value="Tecnologia da Informação" {{ old('sector') == 'Tecnologia da Informação' ? 'selected' : '' }}>TI / Tecnologia</option>
-            <option value="Recursos Humanos" {{ old('sector') == 'Recursos Humanos' ? 'selected' : '' }}>Recursos Humanos (RH)</option>
-            <option value="Financeiro / Contábil" {{ old('sector') == 'Financeiro / Contábil' ? 'selected' : '' }}>Financeiro & Faturamento</option>
-            <option value="Operações / Logística" {{ old('sector') == 'Operações / Logística' ? 'selected' : '' }}>Operações & Logística</option>
-            <option value="Comercial / Vendas" {{ old('sector') == 'Comercial / Vendas' ? 'selected' : '' }}>Comercial & Vendas</option>
-            <option value="Suporte Técnico" {{ old('sector') == 'Suporte Técnico' ? 'selected' : '' }}>Suporte Técnico Interno</option>
-            <option value="Jurídico / Compliance" {{ old('sector') == 'Jurídico / Compliance' ? 'selected' : '' }}>Jurídico & Compliance</option>
+          <select name="setor_id" class="w-full bg-slate-950/80 border border-slate-800 rounded-xl px-4 py-2.5 text-slate-300 text-xs focus:outline-none focus:border-emerald-500 transition-colors cursor-pointer" required>
+            <option value="" disabled {{ old('setor_id') ? '' : 'selected' }}>Selecione um setor...</option>
+            @foreach($setores as $setor)
+              <option value="{{ $setor->id }}" {{ old('setor_id') == $setor->id ? 'selected' : '' }}>{{ $setor->nome }}</option>
+            @endforeach
           </select>
         </div>
         <div>
           <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Cargo / Função exercida</label>
-          <input type="text" name="cargo" value="{{ old('cargo') }}" placeholder="Ex: Analista Financeiro Pleno" class="w-full bg-slate-950/80 border border-slate-800 rounded-xl px-4 py-2.5 text-slate-200 placeholder-slate-700 text-xs focus:outline-none focus:border-emerald-500 transition-colors" required>
+          <select name="cargo_id" class="w-full bg-slate-950/80 border border-slate-800 rounded-xl px-4 py-2.5 text-slate-300 text-xs focus:outline-none focus:border-emerald-500 transition-colors cursor-pointer" required>
+            <option value="" disabled {{ old('cargo_id') ? '' : 'selected' }}>Selecione um cargo...</option>
+            @foreach($cargos as $cargo)
+              <option value="{{ $cargo->id }}" {{ old('cargo_id') == $cargo->id ? 'selected' : '' }}>{{ $cargo->nome }}</option>
+            @endforeach
+          </select>
         </div>
+      </div>
+
+      <div>
+        <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Endereço</label>
+        <input type="text" name="address" value="{{ old('address') }}" placeholder="Rua, número, bairro, cidade..." class="w-full bg-slate-950/80 border border-slate-800 rounded-xl px-4 py-2.5 text-slate-200 placeholder-slate-700 text-xs focus:outline-none focus:border-emerald-500 transition-colors">
       </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">

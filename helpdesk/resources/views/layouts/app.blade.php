@@ -21,8 +21,8 @@
         .hbrand-sub { font-family:'IBM Plex Mono',monospace; font-size:9px; color:var(--text-muted); letter-spacing:1px; text-transform:uppercase; }
         .hbadge { background:var(--bg-800); border:1px solid var(--border); border-radius:20px; padding:4px 12px; font-size:11px; color:var(--text-secondary); font-family:'IBM Plex Mono',monospace; }
         .layout { display:flex; flex:1; overflow:hidden; }
-        .sidebar { width:240px; flex-shrink:0; background:var(--bg-900); border-right:1px solid var(--border); display:flex; flex-direction:column; justify-content:space-between; padding:24px 0; position:sticky; top:56px; height:calc(100vh - 56px); }
-        .sidebar-label { font-family:'IBM Plex Mono',monospace; font-size:9px; font-weight:800; letter-spacing:2px; text-transform:uppercase; color:var(--text-muted); padding:0 16px; margin-bottom:6px; }
+        .sidebar { width:240px; flex-shrink:0; background:var(--bg-900); border-right:1px solid var(--border); display:flex; flex-direction:column; justify-content:space-between; padding:24px 0; position:sticky; top:56px; height:calc(100vh - 56px); overflow-y:auto; }
+        .sidebar-label { font-family:'IBM Plex Mono',monospace; font-size:9px; font-weight:800; letter-spacing:2px; text-transform:uppercase; color:var(--text-muted); padding:0 16px; margin-bottom:6px; margin-top:12px; }
         .sidebar-nav { padding:0 12px; }
         .nav-item { display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:10px; font-size:12px; font-weight:500; color:var(--text-secondary); text-decoration:none; transition:all 0.15s; margin-bottom:2px; }
         .nav-item:hover { color:var(--text-primary); background:var(--bg-800); }
@@ -31,7 +31,8 @@
         .sidebar-footer { padding:16px; border-top:1px solid var(--border); font-family:'IBM Plex Mono',monospace; font-size:9px; color:var(--text-muted); }
         main { flex:1; overflow-y:auto; padding:32px 40px; }
         .flash { display:flex; align-items:center; gap:10px; padding:12px 16px; background:rgba(16,185,129,0.08); border:1px solid rgba(16,185,129,0.2); border-radius:10px; color:#34d399; font-size:13px; margin-bottom:20px; }
-        .page-header { display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:28px; }
+        .flash-error { background:rgba(244,63,94,0.08); border-color:rgba(244,63,94,0.2); color:#fb7185; }
+        .page-header { display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:28px; gap:16px; flex-wrap:wrap; }
         .page-title { font-size:22px; font-weight:700; color:var(--text-primary); letter-spacing:-0.5px; }
         .page-subtitle { font-size:13px; color:var(--text-muted); margin-top:4px; }
         .stats-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:16px; margin-bottom:28px; }
@@ -58,14 +59,15 @@
         .btn-ghost{background:var(--bg-800);border:1px solid var(--border);color:var(--text-secondary);} .btn-ghost:hover{color:var(--text-primary);background:var(--bg-700);}
         .btn-danger{background:rgba(244,63,94,0.1);border:1px solid rgba(244,63,94,0.2);color:#fb7185;} .btn-danger:hover{background:rgba(244,63,94,0.2);}
         .btn-sm{padding:5px 10px;font-size:11px;}
-        .form-card { background:var(--bg-900); border:1px solid var(--border); border-radius:14px; padding:28px; max-width:600px; }
+        .form-card { background:var(--bg-900); border:1px solid var(--border); border-radius:14px; padding:28px; max-width:720px; }
         .form-group { margin-bottom:18px; }
         .form-label { display:block; font-size:11px; font-weight:600; letter-spacing:0.5px; text-transform:uppercase; color:var(--text-muted); font-family:'IBM Plex Mono',monospace; margin-bottom:8px; }
-        .form-input,.form-textarea { width:100%; background:var(--bg-850); border:1px solid var(--border); border-radius:8px; padding:10px 14px; font-size:13px; color:var(--text-primary); font-family:'Inter',sans-serif; outline:none; transition:border-color 0.15s; }
-        .form-input:focus,.form-textarea:focus { border-color:var(--blue-500); box-shadow:0 0 0 3px rgba(59,130,246,0.1); }
+        .form-input,.form-textarea,.form-select { width:100%; background:var(--bg-850); border:1px solid var(--border); border-radius:8px; padding:10px 14px; font-size:13px; color:var(--text-primary); font-family:'Inter',sans-serif; outline:none; transition:border-color 0.15s; }
+        .form-input:focus,.form-textarea:focus,.form-select:focus { border-color:var(--blue-500); box-shadow:0 0 0 3px rgba(59,130,246,0.1); }
         .form-textarea { resize:vertical; min-height:90px; }
         .form-error { font-size:11px; color:#fb7185; margin-top:5px; }
         .form-actions { display:flex; gap:10px; margin-top:24px; padding-top:20px; border-top:1px solid var(--border); }
+        .form-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
         .progress-wrap { margin-bottom:14px; }
         .progress-top { display:flex; justify-content:space-between; margin-bottom:6px; }
         .progress-name { font-size:13px; color:var(--text-secondary); }
@@ -75,6 +77,18 @@
         .empty-state { text-align:center; padding:48px 20px; color:var(--text-muted); }
         .empty-icon { font-size:32px; margin-bottom:12px; }
         .empty-text { font-size:14px; }
+        .badge { display:inline-block; padding:3px 10px; border-radius:20px; font-size:11px; font-weight:600; }
+        .badge-green { background:rgba(16,185,129,0.15); color:#34d399; }
+        .badge-amber { background:rgba(245,158,11,0.15); color:#fcd34d; }
+        .badge-rose { background:rgba(244,63,94,0.15); color:#fb7185; }
+        .badge-blue { background:rgba(59,130,246,0.15); color:#60a5fa; }
+        .detail-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:16px; }
+        .detail-item { background:var(--bg-850); border:1px solid var(--border); border-radius:10px; padding:16px; }
+        .detail-label { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--text-muted); font-family:'IBM Plex Mono',monospace; margin-bottom:6px; }
+        .detail-value { font-size:14px; color:var(--text-primary); }
+        .perm-list { display:flex; flex-wrap:wrap; gap:8px; margin-top:8px; }
+        .perm-chip { background:var(--bg-800); border:1px solid var(--border); border-radius:8px; padding:6px 12px; font-size:12px; }
+        @media (max-width:768px) { .form-grid { grid-template-columns:1fr; } .sidebar { display:none; } }
     </style>
 </head>
 <body>
@@ -86,12 +100,9 @@
             <div class="hbrand-sub">Portal de Suporte</div>
         </div>
     </div>
-<<<<<<< HEAD
-    <span class="hbadge">Fatec Prudente</span>
-=======
     <div style="display:flex; align-items:center; gap:12px;">
         @auth
-            <span class="hbadge">{{ auth()->user()->name }}</span>
+            <span class="hbadge">{{ auth()->user()->name }} · {{ auth()->user()->profile }}</span>
             <form method="POST" action="{{ route('logout') }}" style="margin:0;">
                 @csrf
                 <button type="submit" class="btn btn-ghost btn-sm" style="cursor:pointer;">Sair</button>
@@ -100,12 +111,11 @@
             <span class="hbadge">Fatec Prudente</span>
         @endauth
     </div>
->>>>>>> UsuariosVitoria
 </header>
 <div class="layout">
     <aside class="sidebar">
         <div>
-            <div class="sidebar-label">Navegação</div>
+            <div class="sidebar-label">Principal</div>
             <nav class="sidebar-nav">
                 <a href="{{ route('dashboard') }}" class="nav-item {{ request()->routeIs('dashboard') ? 'active' : '' }}">
                     <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
@@ -116,12 +126,43 @@
                     Categorias
                 </a>
             </nav>
+
+            @auth
+            @if(auth()->user()->isAdmin())
+            <div class="sidebar-label">Controle de Usuários</div>
+            <nav class="sidebar-nav">
+                <a href="{{ route('usuarios.index') }}" class="nav-item {{ request()->routeIs('usuarios.*') ? 'active' : '' }}">
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    Usuários
+                </a>
+                <a href="{{ route('setores.index') }}" class="nav-item {{ request()->routeIs('setores.*') ? 'active' : '' }}">
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+                    Setores
+                </a>
+                <a href="{{ route('cargos.index') }}" class="nav-item {{ request()->routeIs('cargos.*') ? 'active' : '' }}">
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+                    Cargos
+                </a>
+                <a href="{{ route('roles.index') }}" class="nav-item {{ request()->routeIs('roles.*') ? 'active' : '' }}">
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    Perfis
+                </a>
+                <a href="{{ route('permissions.index') }}" class="nav-item {{ request()->routeIs('permissions.*') ? 'active' : '' }}">
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                    Permissões
+                </a>
+            </nav>
+            @endif
+            @endauth
         </div>
         <div class="sidebar-footer">Programação Web · Laravel</div>
     </aside>
     <main>
         @if(session('sucesso'))
             <div class="flash">✓ {{ session('sucesso') }}</div>
+        @endif
+        @if(session('erro'))
+            <div class="flash flash-error">⚠ {{ session('erro') }}</div>
         @endif
         @yield('content')
     </main>
