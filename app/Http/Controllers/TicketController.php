@@ -23,7 +23,8 @@ class TicketController extends Controller
             ->orderBy('created_at', 'desc')
             ->paginate(10);
 
-        return view('tickets.index', compact('tickets'));
+        //return view('tickets.index', compact('tickets'));
+        return view('solicitante.listarChamados', compact('tickets'));
     }
 
     /**

@@ -22,7 +22,7 @@
                 <td>Em aberto</td>
                 <td><button class="btn btn-primary">Ver</button></td>
             </tr>
-            @foreach ($chamados as $c)
+            @foreach ($tickets as $t)
                 <tr class="table-line">
                     <td>{{$c->id}}</td>
                     <td>{{$c->titulo}}</td>

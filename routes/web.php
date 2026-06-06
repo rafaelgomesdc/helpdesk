@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ChamadosController;
+use App\Http\Controllers\TicketController;
 
 Route::get('/', function () {
     return redirect()->route('dashboard');
@@ -15,7 +16,8 @@ Route::resource('categorias', CategoriaController::class);
 
 //Abertura e comunicação de chamados (Dupla 2)
 Route::get('/abrirChamado', [ChamadosController::class, 'viewAbrirChamado']); //Abrir chamado
-Route::get('/listarChamados', [ChamadosController::class, 'viewListarChamados']); //Consultar chamados
+Route::get('/listarChamados', [TicketController::class, 'index'])->name('tickets.index');
+//Route::get('/listarChamados', [ChamadosController::class, 'viewListarChamados']); //Consultar chamados
 Route::get('/chamado', [ChamadosController::class, 'viewComunicacaoChamados']); //Consultar chamados
 
 Route::middleware(['auth'])->group(function () {
