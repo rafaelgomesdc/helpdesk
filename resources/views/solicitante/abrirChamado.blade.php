@@ -25,9 +25,11 @@
                     <p>Prioridade</p>
                     <select name="priority" id="" required>
                         <option value="">Selecione o nível de prioridade</option>
-                        <option value="high">opcao</option>
-                        <option value="opcao">opcao</option>
-                        <option value="opcao">opcao</option>
+                        @foreach($prioridades as $valor => $rotulo)
+                        <option value="{{ $valor }}" {{ old('priority') == $valor ? 'selected' : '' }}>
+                            {{ $rotulo }}
+                        </option>
+                    @endforeach
                     </select>
                 </div>
             </div>

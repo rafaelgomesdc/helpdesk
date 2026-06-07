@@ -25,6 +25,6 @@
                 </tr>
             @endforeach
         </table>
-        <a class="btn btn-primary add" href="{{ url('/abrirChamado') }}">Abrir Chamado</a>
+        <a class="btn btn-primary add" href="{{ route('tickets.create') }}">Abrir Chamado</a>
     </div>
 @endsection

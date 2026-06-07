@@ -40,7 +40,7 @@ class TicketController extends Controller
      */
     public function create()
     {
-        $categorias = Categoria::all();
+        $categorias = Categoria::orderBy('nome')->get();
         
         $prioridades = [
             'low'      => 'Baixa',
@@ -49,7 +49,7 @@ class TicketController extends Controller
             'critical' => 'Crítica'
         ];
 
-        return view('tickets.createChamado', compact('categorias', 'prioridades'));
+        return view('solicitante.abrirChamado', compact('categorias', 'prioridades'));
     }
 
     //Ver chamado específico
