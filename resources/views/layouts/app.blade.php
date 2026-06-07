@@ -127,6 +127,13 @@
                     <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>
                     Categorias
                 </a>
+                <a href="{{ route('tickets.index') }}" 
+                class="nav-item {{ request()->routeIs('tickets.index') ? 'active' : '' }}">
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path d="M4 6h16M4 10h16M4 14h16M4 18h16"/>
+                    </svg>
+                    Meus Chamados
+                </a>
             </nav>
 
             @auth
