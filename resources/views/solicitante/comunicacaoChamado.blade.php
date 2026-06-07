@@ -21,12 +21,18 @@
     <div class="conteudo-chamado">
         <div class="info">
             <div class="left">
-                <p>Título: {{$ticket->title}}</p>
-                <p>Categoria: {{$ticket->categoria_id}}</p>
+                <p class="id">Título</p>
+                <p class="content">{{$ticket->title}}</p>
+                <br>
+                <p class="id">Categoria</p>
+                <p class="content">{{$ticket->categoria_id}}</p>
             </div>
             <div class="right">
-                <p>Prioridade: {{$ticket->priority}}</p>
-                <p>Status: {{$ticket->status}}</p>
+                <p class="id">Prioridade</p>
+                <p class="content">{{$ticket->priority}}</p>
+                <br>
+                <p class="id">Status</p>
+                <p class="content">{{$ticket->status}}</p>
             </div>
         </div>
         <div class="chat">
@@ -44,13 +50,13 @@
                     <p class="mensagem recebida">{{$c->conteudo}}</p>
                 @endif
             @endforeach
-            <div class="caixa-mensagem">
-                <form action="{{ route('tickets.comentario.store', $ticket->id) }}" method="POST">
-                    @csrf
-                    <textarea id="" name="conteudo"></textarea>
-                    <button type="submit">Enviar</button>
-                </form>
-            </div>
+        </div>
+        <div class="caixa-mensagem">
+            <form action="{{ route('tickets.comentario.store', $ticket->id) }}" method="POST">
+                @csrf
+                <textarea id="" name="conteudo"></textarea>
+                <button class="btn btn-primary" type="submit">Enviar</button>
+            </form>
         </div>
     </div>
 @endsection

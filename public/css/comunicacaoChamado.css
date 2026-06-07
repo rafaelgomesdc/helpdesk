@@ -7,14 +7,28 @@
     border: 2px var(--border-color) solid;
     border-radius: 16px;
     padding: 30px;
+    height: 75vh;
 }
 
+/*Informações do chamado*/
 .conteudo-chamado .info {
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: left;
+    gap: 30%;
 }
 
+.info .id {
+    color: var(--text-secondary);
+    font-size: 16px;
+}
+
+.info .content {
+    color: var(--text-primary);
+    font-size: 20px;
+}
+
+/*Conteúdo do chamado*/
 .conteudo-chamado .chat {
     display: flex;
     flex-direction: column;
@@ -23,6 +37,9 @@
     border: 2px var(--border-color) solid;
     border-radius: 16px;
     padding: 30px;
+
+    height: 100%;
+    overflow-y: auto;
 }
 
 .mensagem {
@@ -51,26 +68,31 @@
     align-items: center;
 }
 
-.caixa-mensagem textarea {
-    padding: 10px;
-    width: 92%;
-    height: 100%;
-    font-size: 16px;
-    border: none;
-    background-color: var(--bg-primary);
-    color: var(--text-primary);
-    border-top-left-radius: 16px;
-    border-bottom-left-radius: 16px;
-    border: 2px var(--border-color) solid;
-    flex: 1;
+.caixa-mensagem form {
+    display: flex;
+    align-items: stretch;
+    width: 100%;
 }
 
-.caixa-mensagem a {
+.caixa-mensagem textarea {
+    flex: 1;
     padding: 10px;
-    width: 7%;
-    border-top-right-radius: 16px;
-    border-bottom-right-radius: 16px;
-    background-color: var(--blue);
-    border: 2px var(--blue) solid;
+    font-size: 16px;
+
+    background-color: var(--bg-primary);
     color: var(--text-primary);
+
+    border: 2px solid var(--border-color);
+    border-top-left-radius: 16px;
+    border-bottom-left-radius: 16px;
+
+    resize: none;
+}
+
+.caixa-mensagem button {
+    padding: 10px 20px;
+
+    border: 2px solid var(--blue);
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
 }
