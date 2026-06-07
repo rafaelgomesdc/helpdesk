@@ -112,7 +112,7 @@ define('DB_USER', 'root');          // Usuário do banco (padrão: root)
 
 ---
 
-## 4. **Executar o Sistema**
+4. **Executar o Sistema**
 
 Após configurar a conexão, siga os passos para rodar o sistema:
 
