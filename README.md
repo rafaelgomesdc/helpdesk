@@ -85,8 +85,6 @@ Estrutura principal do banco de dados:
 
 ---
 
-
-```markdown
 ## Como Usar
 
 1. **Configurar o Banco de Dados**
