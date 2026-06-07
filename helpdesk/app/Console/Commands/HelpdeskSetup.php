@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Prioridade;
 use App\Models\User;
 use Database\Seeders\UserSeeder;
 use Illuminate\Console\Command;
@@ -17,22 +18,25 @@ class HelpdeskSetup extends Command
 
     public function handle(): int
     {
-        $this->info('Sincronizando schema...');
+        $migrations = [
+            '2026_06_06_220000_add_auth_tables_for_mysql.php',
+            '2026_06_07_000001_create_ticket_support_tables.php',
+        ];
 
-        Artisan::call('migrate', [
-            '--path' => 'database/migrations/2026_06_06_220000_add_auth_tables_for_mysql.php',
-            '--force' => true,
-        ]);
-
-        $this->line(Artisan::output());
+        foreach ($migrations as $file) {
+            Artisan::call('migrate', [
+                '--path' => 'database/migrations/'.$file,
+                '--force' => true,
+            ]);
+        }
 
         if (! Schema::hasColumn('users', 'security_question')) {
-            $this->error('Colunas de segurança não foram criadas. Verifique a conexão com o banco.');
+            $this->error('Colunas de segurança ausentes. Verifique DB_SOCKET no .env');
 
             return self::FAILURE;
         }
 
-        $this->info('Populando perfis, permissões e usuários...');
+        $this->info('Populando dados iniciais...');
         (new UserSeeder)->run();
 
         User::where('email', 'admin@helpdesk.com')->update([
@@ -43,6 +47,17 @@ class HelpdeskSetup extends Command
             'security_question' => 'Qual o nome da sua primeira escola?',
             'security_answer' => 'objetivo',
         ]);
+
+        foreach ([
+            ['nome' => 'Baixa', 'nivel' => 1, 'cor' => '#28a745'],
+            ['nome' => 'Média', 'nivel' => 2, 'cor' => '#ffc107'],
+            ['nome' => 'Alta', 'nivel' => 3, 'cor' => '#fd7e14'],
+            ['nome' => 'Crítica', 'nivel' => 4, 'cor' => '#dc3545'],
+        ] as $p) {
+            Prioridade::updateOrCreate(['nome' => $p['nome']], $p);
+        }
+
+        Artisan::call('storage:link');
 
         $this->info('Setup concluído!');
         $this->table(['Campo', 'Valor'], [

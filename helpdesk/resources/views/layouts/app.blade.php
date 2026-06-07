@@ -121,14 +121,45 @@
                     <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
                     Dashboard
                 </a>
-                <a href="{{ route('categorias.index') }}" class="nav-item {{ request()->routeIs('categorias.*') ? 'active' : '' }}">
-                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>
-                    Categorias
-                </a>
             </nav>
 
             @auth
+            <div class="sidebar-label">Chamados</div>
+            <nav class="sidebar-nav">
+                <a href="{{ route('tickets.index') }}" class="nav-item {{ request()->routeIs('tickets.*') ? 'active' : '' }}">
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>
+                    Meus Chamados
+                </a>
+                <a href="{{ route('tickets.create') }}" class="nav-item">
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+                    Abrir Chamado
+                </a>
+            </nav>
+
+            @if(in_array(auth()->user()->profile, ['Admin', 'Técnico']))
+            <div class="sidebar-label">Painel Técnico</div>
+            <nav class="sidebar-nav">
+                <a href="{{ route('technician.pending') }}" class="nav-item {{ request()->routeIs('technician.pending') ? 'active' : '' }}">Pendentes</a>
+                <a href="{{ route('technician.in-progress') }}" class="nav-item {{ request()->routeIs('technician.in-progress') ? 'active' : '' }}">Em Atendimento</a>
+                @if(auth()->user()->isAdmin())
+                <a href="{{ route('technician.manage') }}" class="nav-item {{ request()->routeIs('technician.manage') ? 'active' : '' }}">Gerenciar</a>
+                @endif
+            </nav>
+            @endif
+
+            <div class="sidebar-label">Base de Conhecimento</div>
+            <nav class="sidebar-nav">
+                <a href="{{ route('faqs.index') }}" class="nav-item {{ request()->routeIs('faqs.*') ? 'active' : '' }}">FAQs</a>
+                <a href="{{ route('artigos.index') }}" class="nav-item {{ request()->routeIs('artigos.*') ? 'active' : '' }}">Artigos</a>
+            </nav>
+
             @if(auth()->user()->isAdmin())
+            <div class="sidebar-label">Configurações</div>
+            <nav class="sidebar-nav">
+                <a href="{{ route('categorias.index') }}" class="nav-item {{ request()->routeIs('categorias.*') ? 'active' : '' }}">Categorias</a>
+                <a href="{{ route('prioridades.index') }}" class="nav-item {{ request()->routeIs('prioridades.*') ? 'active' : '' }}">Prioridades</a>
+            </nav>
+
             <div class="sidebar-label">Controle de Usuários</div>
             <nav class="sidebar-nav">
                 <a href="{{ route('usuarios.index') }}" class="nav-item {{ request()->routeIs('usuarios.*') ? 'active' : '' }}">
