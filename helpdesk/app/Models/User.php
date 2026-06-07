@@ -12,18 +12,44 @@ class User extends Authenticatable
 
     protected $fillable = [
         'name', 'email', 'password', 'security_question', 'security_answer',
-        'status', 'profile', 'phone', 'address', 'setor_id', 'cargo_id', 'role_id',
+        'status', 'profile', 'role', 'phone', 'address', 'setor_id', 'cargo_id', 'role_id',
     ];
 
     protected $hidden = ['password', 'security_answer', 'remember_token'];
 
+    protected static function booted(): void
+    {
+        static::saving(function (User $user) {
+            if ($user->isDirty('profile') || ! $user->role) {
+                $user->role = self::profileToRoleEnum($user->profile);
+            }
+        });
+    }
+
+    public static function profileToRoleEnum(?string $profile): string
+    {
+        return match ($profile) {
+            'Admin' => 'admin',
+            'Técnico' => 'technician',
+            default => 'user',
+        };
+    }
+
     public function setSecurityAnswerAttribute($value)
     {
+        if ($value === null || $value === '') {
+            return;
+        }
+
         $this->attributes['security_answer'] = Hash::make(strtolower(trim($value)));
     }
 
     public function verifySecurityAnswer($plainAnswer)
     {
+        if (! $this->security_answer) {
+            return false;
+        }
+
         return Hash::check(strtolower(trim($plainAnswer)), $this->security_answer);
     }
 
@@ -37,14 +63,19 @@ class User extends Authenticatable
         return $this->belongsTo(Cargo::class);
     }
 
-    public function role()
+    public function accessRole()
     {
-        return $this->belongsTo(Role::class);
+        return $this->belongsTo(Role::class, 'role_id');
     }
 
     public function isAdmin(): bool
     {
         return $this->profile === 'Admin';
+    }
+
+    public function isPending(): bool
+    {
+        return $this->status === 'Pendente';
     }
 
     public function hasPermission(string $permission): bool
@@ -53,6 +84,6 @@ class User extends Authenticatable
             return true;
         }
 
-        return $this->role?->permissions->contains('name', $permission) ?? false;
+        return $this->accessRole?->permissions->contains('name', $permission) ?? false;
     }
 }

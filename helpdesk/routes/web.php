@@ -33,6 +33,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('categorias', CategoriaController::class)->except(['show']);
 
     Route::middleware('profile:Admin')->group(function () {
+        Route::post('usuarios/{usuario}/aprovar', [UsuarioController::class, 'aprovar'])->name('usuarios.aprovar');
+        Route::post('usuarios/{usuario}/rejeitar', [UsuarioController::class, 'rejeitar'])->name('usuarios.rejeitar');
         Route::resource('usuarios', UsuarioController::class);
         Route::resource('setores', SetorController::class)->except(['show'])->parameters(['setores' => 'setor']);
         Route::resource('cargos', CargoController::class)->except(['show']);

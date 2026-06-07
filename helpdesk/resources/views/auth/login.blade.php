@@ -45,7 +45,7 @@
             name="email"
             type="email"
             value="{{ old('email') }}"
-            placeholder="ex: admin@empresa.com"
+            placeholder="ex: admin@helpdesk.com"
             class="w-full bg-slate-950/80 border border-slate-800 rounded-xl pl-4 pr-10 py-3 text-slate-200 placeholder-slate-750 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all font-mono"
             required
           />

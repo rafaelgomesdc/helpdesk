@@ -76,7 +76,7 @@
     <div class="form-group">
         <label class="form-label">Status</label>
         <select name="status" class="form-select" required>
-            @foreach(['Ativo', 'Pendente', 'Rejeitado', 'Inativo'] as $st)
+            @foreach(['Ativo', 'Pendente', 'Rejeitado'] as $st)
                 <option value="{{ $st }}" @selected(old('status', $usuario->status ?? 'Ativo') == $st)>{{ $st }}</option>
             @endforeach
         </select>

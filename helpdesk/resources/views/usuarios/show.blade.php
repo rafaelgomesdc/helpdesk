@@ -7,8 +7,19 @@
         <h1 class="page-title">{{ $usuario->name }}</h1>
         <p class="page-subtitle">Detalhes do colaborador</p>
     </div>
-    <div style="display:flex; gap:8px;">
-        <a href="{{ route('usuarios.edit', $usuario) }}" class="btn btn-primary">Editar</a>
+    <div style="display:flex; gap:8px; flex-wrap:wrap;">
+        @if($usuario->status === 'Pendente')
+            <form action="{{ route('usuarios.aprovar', $usuario) }}" method="POST" style="margin:0;">
+                @csrf
+                <button type="submit" class="btn btn-primary">✓ Aprovar acesso</button>
+            </form>
+            <form action="{{ route('usuarios.rejeitar', $usuario) }}" method="POST" style="margin:0;">
+                @csrf
+                <button type="submit" class="btn btn-danger"
+                    onclick="return confirm('Rejeitar esta solicitação?')">✗ Rejeitar</button>
+            </form>
+        @endif
+        <a href="{{ route('usuarios.edit', $usuario) }}" class="btn btn-ghost">Editar</a>
         <a href="{{ route('usuarios.index') }}" class="btn btn-ghost">Voltar</a>
     </div>
 </div>
@@ -47,18 +58,22 @@
     </div>
     <div class="detail-item">
         <div class="detail-label">Perfil (Role)</div>
-        <div class="detail-value">{{ $usuario->role?->name ?? '—' }}</div>
+        <div class="detail-value">{{ $usuario->accessRole?->name ?? '—' }}</div>
+    </div>
+    <div class="detail-item">
+        <div class="detail-label">Pergunta de segurança</div>
+        <div class="detail-value">{{ $usuario->security_question ?? '—' }}</div>
     </div>
 </div>
 
-@if($usuario->role && $usuario->role->permissions->isNotEmpty())
+@if($usuario->accessRole && $usuario->accessRole->permissions->isNotEmpty())
 <div class="table-wrap">
     <div class="table-header">
         <span class="table-title">Permissões do perfil</span>
     </div>
     <div style="padding:20px;">
         <div class="perm-list">
-            @foreach($usuario->role->permissions as $perm)
+            @foreach($usuario->accessRole->permissions as $perm)
                 <span class="perm-chip">{{ $perm->name }}</span>
             @endforeach
         </div>
