@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="assets/img/logo_sem_fundo.webp" alt="Helpdesk Logo" width="300"/>
+<img src="logo.png" alt="Helpdesk Logo" width="300"/>
 
 # Helpdesk
 
