@@ -73,9 +73,9 @@
         <div>
           <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Nível de Acesso Solicitado</label>
           <select name="profile" class="w-full bg-slate-950/80 border border-slate-800 rounded-xl px-4 py-2.5 text-slate-300 text-xs focus:outline-none focus:border-emerald-500 transition-colors cursor-pointer" required>
-            <option value="Usuário" {{ old('profile') == 'Usuário' ? 'selected' : '' }}>Usuário Solicitante (Comum)</option>
+            <option value="Usuário" {{ old('profile', 'Usuário') == 'Usuário' ? 'selected' : '' }}>Usuário Solicitante (Comum)</option>
             <option value="Técnico" {{ old('profile') == 'Técnico' ? 'selected' : '' }}>Técnico Analista (Suporte HelpDesk)</option>
-            <option value="Admin" {{ old('profile') == 'Admin' ? 'selected' : '' }}>Administrador do Sistema</option>
+          </select>
           </select>
         </div>
       </div>

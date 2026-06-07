@@ -33,7 +33,37 @@ CREATE TABLE cargos (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- -------------------------------------------------------------
--- 3. USERS  (tabela principal do Laravel Auth)
+-- 3b. ROLES E PERMISSÕES  (Controle de Usuários)
+-- -------------------------------------------------------------
+CREATE TABLE roles (
+    id          BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    name        VARCHAR(100) NOT NULL,
+    description VARCHAR(255) NULL,
+    created_at  TIMESTAMP NULL,
+    updated_at  TIMESTAMP NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE permissions (
+    id          BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    name        VARCHAR(100) NOT NULL,
+    description VARCHAR(255) NULL,
+    created_at  TIMESTAMP NULL,
+    updated_at  TIMESTAMP NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE permission_role (
+    id            BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    role_id       BIGINT UNSIGNED NOT NULL,
+    permission_id BIGINT UNSIGNED NOT NULL,
+    created_at    TIMESTAMP NULL,
+    updated_at    TIMESTAMP NULL,
+    UNIQUE KEY uniq_role_permission (role_id, permission_id),
+    CONSTRAINT fk_pr_role FOREIGN KEY (role_id) REFERENCES roles(id) ON DELETE CASCADE,
+    CONSTRAINT fk_pr_permission FOREIGN KEY (permission_id) REFERENCES permissions(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- -------------------------------------------------------------
+-- 4. USERS  (tabela principal do Laravel Auth)
 --    role: 'user' = solicitante | 'technician' = técnico | 'admin'
 -- -------------------------------------------------------------
 CREATE TABLE users (
@@ -41,18 +71,24 @@ CREATE TABLE users (
     name              VARCHAR(255) NOT NULL,
     email             VARCHAR(255) NOT NULL UNIQUE,
     role              ENUM('user','technician','admin') NOT NULL DEFAULT 'user',
+    status            ENUM('Pendente','Ativo','Rejeitado') NOT NULL DEFAULT 'Pendente',
+    profile           ENUM('Admin','Técnico','Usuário') NOT NULL DEFAULT 'Usuário',
+    phone             VARCHAR(50) NULL,
+    address           VARCHAR(255) NULL,
     email_verified_at TIMESTAMP NULL,
     password          VARCHAR(255) NOT NULL,
-    contato           VARCHAR(50)  NULL,
+    security_question VARCHAR(255) NULL,
+    security_answer   VARCHAR(255) NULL,
+    contato           VARCHAR(50) NULL,
     setor_id          BIGINT UNSIGNED NULL,
     cargo_id          BIGINT UNSIGNED NULL,
+    role_id           BIGINT UNSIGNED NULL,
     remember_token    VARCHAR(100) NULL,
     created_at        TIMESTAMP NULL,
     updated_at        TIMESTAMP NULL,
     CONSTRAINT fk_users_setor FOREIGN KEY (setor_id) REFERENCES setores(id) ON DELETE SET NULL,
-    CONSTRAINT fk_users_cargo FOREIGN KEY (cargo_id) REFERENCES cargos(id)  ON DELETE SET NULL
+    CONSTRAINT fk_users_cargo FOREIGN KEY (cargo_id) REFERENCES cargos(id) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
 -- -------------------------------------------------------------
 -- 4. PASSWORD RESET TOKENS  (exigido pelo Laravel)
 -- -------------------------------------------------------------
@@ -280,12 +316,12 @@ INSERT INTO prioridades (nome, nivel, cor, created_at, updated_at) VALUES
 ('Crítica',  4, '#dc3545', NOW(), NOW());
 
 -- Usuários de exemplo
--- Senhas geradas com bcrypt (padrão Laravel) para "password123"
--- Troque as senhas pelo hash real ao rodar php artisan db:seed
-INSERT INTO users (name, email, role, password, contato, setor_id, cargo_id, created_at, updated_at) VALUES
-('Administrador',   'admin@helpdesk.com',     'admin',      '$2y$12$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '(11) 99999-0001', 1, 5, NOW(), NOW()),
-('Carlos Técnico',  'tecnico@helpdesk.com',   'technician', '$2y$12$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '(11) 99999-0002', 1, 2, NOW(), NOW()),
-('Maria Usuária',   'usuario@helpdesk.com',   'user',       '$2y$12$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '(11) 99999-0003', 2, 1, NOW(), NOW());
+-- Senha do admin: 12345678 (rodar php artisan helpdesk:setup após importar)
+INSERT INTO users (name, email, role, status, profile, phone, address, password, security_question, security_answer, contato, setor_id, cargo_id, role_id, created_at, updated_at) VALUES
+('Administrador', 'admin@helpdesk.com', 'admin', 'Ativo', 'Admin', '(11) 99999-0001', 'Presidente Prudente/SP', '$2y$12$wKLUX7b6mxX8m2FzOVtMDO7FtYfQlt9dNXs7b4alvldh1uM1/71H.', 'Qual o nome da sua primeira escola?', NULL, '(11) 99999-0001', 1, 5, NULL, NOW(), NOW()),
+('Carlos Técnico', 'tecnico@helpdesk.com', 'technician', 'Ativo', 'Técnico', '(11) 99999-0002', 'Presidente Prudente/SP', '$2y$12$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '(11) 99999-0002', 1, 2, NULL, NOW(), NOW()),
+('Maria Usuária', 'usuario@helpdesk.com', 'user', 'Ativo', 'Usuário', '(11) 99999-0003', 'Presidente Prudente/SP', '$2y$12$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '(11) 99999-0003', 2, 1, NULL, NOW(), NOW());
+
 
 -- Chamado de exemplo
 INSERT INTO tickets (title, description, status, priority, categoria_id, user_id, technician_id, created_at, updated_at) VALUES

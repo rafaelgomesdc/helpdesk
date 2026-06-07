@@ -40,7 +40,7 @@
       </div>
       <div>
         <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">E-mail Cadastrado</label>
-        <input id="recovery-email-input" type="email" placeholder="ex: admin@empresa.com" class="w-full bg-slate-950/80 border border-slate-800 rounded-xl px-4 py-3 text-slate-200 placeholder-slate-650 text-sm focus:outline-none focus:border-blue-500 transition-colors font-mono" required>
+        <input id="recovery-email-input" type="email" placeholder="ex: admin@helpdesk.com" class="w-full bg-slate-950/80 border border-slate-800 rounded-xl px-4 py-3 text-slate-200 placeholder-slate-650 text-sm focus:outline-none focus:border-blue-500 transition-colors font-mono" required>
       </div>
       <div class="flex gap-3 pt-2">
         <a href="{{ route('login') }}" class="w-1/2 border border-slate-800 hover:bg-slate-850 text-slate-400 hover:text-slate-200 py-3 rounded-xl text-xs font-semibold uppercase tracking-wider transition-colors text-center cursor-pointer">Cancelar</a>

@@ -61,8 +61,8 @@ class UserSeeder extends Seeder
         $users = [
             [
                 'name' => 'Mariana Souza Silva',
-                'email' => 'admin@empresa.com',
-                'password' => Hash::make('123456'),
+                'email' => 'admin@helpdesk.com',
+                'password' => Hash::make('12345678'),
                 'profile' => 'Admin',
                 'setor_id' => $ti->id,
                 'cargo_id' => $adminCargo->id,
@@ -75,8 +75,8 @@ class UserSeeder extends Seeder
             ],
             [
                 'name' => 'Carlos Alberto Ferreira',
-                'email' => 'carlos.suporte@empresa.com',
-                'password' => Hash::make('123456'),
+                'email' => 'carlos.suporte@helpdesk.com',
+                'password' => Hash::make('12345678'),
                 'profile' => 'Técnico',
                 'setor_id' => $ti->id,
                 'cargo_id' => $suporteCargo->id,
@@ -89,8 +89,8 @@ class UserSeeder extends Seeder
             ],
             [
                 'name' => 'Juliana Silva Castro',
-                'email' => 'juliana.financeiro@empresa.com',
-                'password' => Hash::make('123456'),
+                'email' => 'juliana.financeiro@helpdesk.com',
+                'password' => Hash::make('12345678'),
                 'profile' => 'Usuário',
                 'setor_id' => $fin->id,
                 'cargo_id' => $analistaCargo->id,

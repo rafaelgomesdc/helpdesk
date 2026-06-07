@@ -29,7 +29,7 @@ class RegisterController extends Controller
             'address' => 'nullable|string|max:255',
             'setor_id' => 'required|exists:setores,id',
             'cargo_id' => 'required|exists:cargos,id',
-            'profile' => 'required|string|in:Usuário,Técnico,Admin',
+            'profile' => 'required|string|in:Usuário,Técnico',
             'question' => 'required|string|max:255',
             'answer' => 'required|string|min:2|max:255',
         ]);
@@ -43,6 +43,7 @@ class RegisterController extends Controller
             'setor_id' => $data['setor_id'],
             'cargo_id' => $data['cargo_id'],
             'profile' => $data['profile'],
+            'role' => User::profileToRoleEnum($data['profile']),
             'security_question' => $data['question'],
             'security_answer' => $data['answer'],
             'status' => 'Pendente',
