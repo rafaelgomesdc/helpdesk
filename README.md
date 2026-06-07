@@ -62,10 +62,10 @@ Com controle de permissões, categorias, prioridades, dashboard e base de conhec
 | Camada | Tecnologia |
 |--------|-----------|
 | Back-end / Linguagem | PHP 100% |
-| Banco de Dados | [Insira aqui, ex: MySQL, PostgreSQL] |
+| Banco de Dados |  MySQL |
 | Front-end | HTML5, CSS3, JavaScript |
-| Estilização | [Insira aqui, ex: Bootstrap, CSS Puro] |
-| Hospedagem | [Insira aqui, ex: XAMPP, Servidor Web] |
+| Estilização | Bootstrap e CSS] |
+| Hospedagem | XAMPP, Servidor Web] |
 
 ---
 
@@ -95,30 +95,77 @@ Estrutura principal do banco de dados:
 git clone https://github.com/seu-usuario/helpdesk.git
 cd helpdesk
 
-Configurar a Conexão
-Edite o arquivo de configuração config/database.php com as credenciais do seu banco.
-Executar o Sistema
-Utilize um servidor local como XAMPP ou WAMP.
-Acesse pelo navegador: http://localhost/helpdesk
-Nota: O sistema já vem com um usuário administrador padrão para o primeiro acesso.
-Roadmap
+3. **Configurar a Conexão**
+
+Edite o arquivo de configuração da conexão com o banco de dados, localizado em `config/database.php`, inserindo as credenciais do seu ambiente:
+
+```php
+<?php
+// Configurações de acesso ao Banco de Dados
+define('DB_HOST', 'localhost');     // Servidor do banco (geralmente localhost)
+define('DB_NAME', 'helpdesk');      // Nome do banco de dados criado
+define('DB_USER', 'root');          // Usuário do banco (padrão: root)
+
+```markdown
+
+> **Observação:** Se estiver utilizando um servidor de hospedagem, altere os valores conforme os dados fornecidos pelo provedor.
+
+---
+
+## 4. **Executar o Sistema**
+
+Após configurar a conexão, siga os passos para rodar o sistema:
+
+1. Certifique-se de que o servidor Apache e o MySQL estão iniciados (no XAMPP/WAMP).
+2. Coloque a pasta do projeto dentro do diretório de hospedagem (`htdocs` no XAMPP).
+3. Acesse pelo navegador:
+```
+http://localhost/helpdesk
+```
+
+> **Acesso Inicial:**
+> O sistema já vem com um usuário administrador padrão para o primeiro acesso:
+> - **E-mail:** `admin@helpdesk.com`
+> - **Senha:** `admin123`
+>
+> ⚠️ **Recomendação:** Altere essa senha imediatamente após o primeiro login por questões de segurança.
+
+---
+
+## Roadmap
+
 Funcionalidades previstas para versões futuras:
-🚀 Melhorias no Atendimento
- Notificações por e-mail — avisar solicitante e técnico sobre atualizações no chamado
- Escalonamento automático — direcionar chamados críticos para supervisores
- Classificação de satisfação — pesquisa de satisfação ao fechar o chamado
-📊 Relatórios Avançados
- Exportação de dados — relatórios em PDF e Excel
- Filtros personalizados — relatórios por período, setor, técnico ou categoria
- Gráficos de desempenho — produtividade por técnico e setor
-📚 Base de Conhecimento
- Busca inteligente — pesquisa por palavras-chave nos artigos
- Acesso público — parte da base pode ser visualizada sem login
-Projeto desenvolvido para a disciplina de Laboratório de Engenharia de Software — FATEC Presidente Prudente, 5º termo (2026).
-👥 Equipe / Contribuidores
-Vitória — vitoriaamr
-Camila — milagoncc
-Rafael Gomes — rafaelgomesdc
-Paulo — Paulo5025
-Licença
-Distribuído sob a licença MIT. Veja o arquivo LICENSE para mais detalhes.
+
+### 🚀 Melhorias no Atendimento
+- [ ] **Notificações por e-mail** — avisar solicitante e técnico sobre atualizações no chamado
+- [ ] **Escalonamento automático** — direcionar chamados críticos para supervisores
+- [ ] **Classificação de satisfação** — pesquisa de satisfação ao fechar o chamado
+
+### 📊 Relatórios Avançados
+- [ ] **Exportação de dados** — relatórios em PDF e Excel
+- [ ] **Filtros personalizados** — relatórios por período, setor, técnico ou categoria
+- [ ] **Gráficos de desempenho** — produtividade por técnico e setor
+
+### 📚 Base de Conhecimento
+- [ ] **Busca inteligente** — pesquisa por palavras-chave nos artigos
+- [ ] **Acesso público** — parte da base pode ser visualizada sem login
+
+---
+
+Projeto desenvolvido para a disciplina de **Laboratório de Engenharia de Software** — FATEC Presidente Prudente, 5º termo (2026).
+
+## 👥 Equipe / Contribuidores
+
+- **Vitória** — [vitoriaamr](https://github.com/vitoriaamr)
+- **Camila** — [milagoncc](https://github.com/milagoncc)
+- **Rafael Gomes** — [rafaelgomesdc](https://github.com/rafaelgomesdc)
+- **Paulo** — [Paulo5025](https://github.com/Paulo5025)
+
+---
+
+## Licença
+
+Distribuído sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
+```
+define('DB_PASS', '');              // Senha do banco (em branco por padrão no XAMPP)
+define('DB_CHARSET', 'utf8mb4');    // Codificação de caracteres
