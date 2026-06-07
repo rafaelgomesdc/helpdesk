@@ -85,7 +85,6 @@ Estrutura principal do banco de dados:
 
 ---
 
-```markdown
 ## Como Usar
 
 1. **Configurar o Banco de Dados**
@@ -122,7 +121,7 @@ http://localhost/helpdesk
 
 > **Acesso Inicial:**
 > O sistema já vem com um usuário administrador padrão para o primeiro acesso:
-> - **E-mail:** `admin@sistema.com`
+> - **E-mail:** `admin@helpdesk.com`
 > - **Senha:** `admin123`
 >
 > ⚠️ **Recomendação:** Altere essa senha imediatamente após o primeiro login por questões de segurança.
@@ -164,5 +163,4 @@ Projeto desenvolvido para a disciplina de **Laboratório de Engenharia de Softwa
 
 Distribuído sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
 ```
-define('DB_PASS', '');              // Senha do banco (em branco por padrão no XAMPP)
-define('DB_CHARSET', 'utf8mb4');    // Codificação de caracteres
+
