@@ -18,10 +18,18 @@ class TicketController extends Controller
      */
     public function index()
     {
-        $tickets = Ticket::with('categoria')
-            ->where('user_id', Auth::id())
-            ->orderBy('created_at', 'desc')
-            ->paginate(10);
+        $tickets;
+        if (Auth::user()->role === 'user') {
+            $tickets = Ticket::with('categoria')
+                ->where('user_id', Auth::id())
+                ->orderBy('created_at', 'desc')
+                ->paginate(10);
+        }
+        elseif (Auth::user()->role === 'technician') {
+            $tickets = Ticket::with('categoria')
+                ->orderBy('created_at', 'desc')
+                ->paginate(10);
+        }
 
         //return view('tickets.index', compact('tickets'));
         return view('solicitante.listarChamados', compact('tickets'));
