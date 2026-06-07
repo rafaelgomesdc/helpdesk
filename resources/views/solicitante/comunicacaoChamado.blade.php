@@ -30,6 +30,13 @@
             </div>
         </div>
         <div class="chat">
+            <!--Primeira mensagem (descricao)*/-->
+            @if ($ticket->user_id === Auth::id())
+                <p class="mensagem enviada">{{$ticket->description}}</p>
+            @else
+                <p class="mensagem recebida">{{$ticket->description}}</p>
+            @endif
+            <!--Mensagens (comentarios)-->
             @foreach ($comentarios as $c)
                 @if ($c->user_id === Auth::id())
                     <p class="mensagem enviada">{{$c->conteudo}}</p>
@@ -37,10 +44,6 @@
                     <p class="mensagem recebida">{{$c->conteudo}}</p>
                 @endif
             @endforeach
-            <!--
-            <p class="mensagem enviada">{{$ticket->description}}</p>
-            <p class="mensagem recebida">conteudo da resposta mais Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto beatae expedita consequuntur explicabo quam cupiditate voluptates alias quae deserunt? Obcaecati harum neque perferendis aut sapiente quibusdam totam officia aperiam temporibus? completa Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem deleniti est quos tempore alias facilis tenetur nam obcaecati, culpa et quaerat distinctio vitae eius architecto! Praesentium tempore vel deleniti eius.</p>
-            -->
             <div class="caixa-mensagem">
                 <form action="{{ route('tickets.comentario.store', $ticket->id) }}" method="POST">
                     @csrf
