@@ -41,7 +41,7 @@ class TicketController extends Controller
             'critical' => 'Crítica'
         ];
 
-        return view('tickets.create', compact('categorias', 'prioridades'));
+        return view('tickets.createChamado', compact('categorias', 'prioridades'));
     }
 
     /**

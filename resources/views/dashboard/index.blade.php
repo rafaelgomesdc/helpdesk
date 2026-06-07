@@ -9,7 +9,6 @@
     </div>
 </div>
 
-{{-- CARDS DE TOTAIS --}}
 <div class="stats-grid">
     <div class="stat-card blue">
         <div class="stat-label">Abertos</div>
@@ -33,7 +32,6 @@
     </div>
 </div>
 
-{{-- CHAMADOS POR CATEGORIA --}}
 <div class="table-wrap">
     <div class="table-header">
         <span class="table-title">Chamados por Categoria</span>
