@@ -85,10 +85,13 @@ Estrutura principal do banco de dados:
 
 ---
 
+
+```markdown
 ## Como Usar
 
 1. **Configurar o Banco de Dados**
-   - Execute o script SQL disponível na pasta `database/` para criar as tabelas e relações no seu gerenciador de banco de dados (MySQL, phpMyAdmin ou similar).
+   - Abra o phpMyAdmin (ou seu gerenciador MySQL)
+   - Importe o arquivo `helpdesk.sql` disponível na raiz do projeto — ele criará automaticamente o banco `helpdesk`, todas as tabelas e os dados iniciais já cadastrados.
 
 2. **Clonar o Repositório**
 ```bash
@@ -96,35 +99,71 @@ git clone https://github.com/rafaelgomesdc/helpdesk.git
 cd helpdesk
 ```
 
-3. **Configurar a Conexão**
-   - Edite o arquivo de configuração da conexão com o banco de dados, localizado em `config/database.php`, inserindo as credenciais do seu ambiente:
+3. **Configurar o Ambiente (.env)**
+   - No Laravel, as configurações ficam no arquivo `.env` (copie o arquivo `.env.example` e renomeie para `.env`):
 
-```php
-<?php
-// Configurações de acesso ao Banco de Dados
-define('DB_HOST', 'localhost');     // Servidor do banco (geralmente localhost)
-define('DB_NAME', 'helpdesk');      // Nome do banco de dados criado
-define('DB_USER', 'root');          // Usuário do banco (padrão: root)
-define('DB_PASS', '');              // Senha do banco (em branco por padrão no XAMPP)
-define('DB_CHARSET', 'utf8mb4');    // Codificação de caracteres
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=helpdesk
+DB_USERNAME=root
+DB_PASSWORD=
+DB_CHARSET=utf8mb4
+DB_COLLATION=utf8mb4_unicode_ci
 ```
 
-> **Observação:** Se estiver utilizando um servidor de hospedagem, altere os valores conforme os dados fornecidos pelo provedor.
+> **Observação:** O banco já está configurado com `utf8mb4_unicode_ci` — compatível com o script SQL fornecido.
+> Altere `DB_PASSWORD` se seu banco tiver senha.
 
 4. **Executar o Sistema**
    - Certifique-se de que o servidor Apache e o MySQL estão iniciados (no XAMPP/WAMP).
-   - Coloque a pasta do projeto dentro do diretório de hospedagem (`htdocs` no XAMPP).
+   - No terminal, instale as dependências e gere a chave da aplicação:
+```bash
+composer install
+php artisan key:generate
+```
+   - Para popular o sistema com dados padrão (caso não tenha importado o SQL), execute:
+```bash
+php artisan migrate --seed
+```
    - Acesse pelo navegador:
 ```
-http://localhost/helpdesk
+http://localhost/helpdesk/public
 ```
 
-> **Acesso Inicial:**
-> O sistema já vem com um usuário administrador padrão para o primeiro acesso:
-> - **E-mail:** `admin@helpdesk.com`
-> - **Senha:** `admin123`
+> **Acesso Inicial (cadastrado no banco):**
+> - **Administrador:**
+>   E-mail: `admin@helpdesk.com`
+>   Senha: `12345678`
 >
-> ⚠️ **Recomendação:** Altere essa senha imediatamente após o primeiro login por questões de segurança.
+> - **Técnico:**
+>   E-mail: `tecnico@helpdesk.com`
+>   Senha: `12345678`
+>
+> - **Usuário Solicitante:**
+>   E-mail: `usuario@helpdesk.com`
+>   Senha: `12345678`
+>
+> ⚠️ **Recomendação:** Altere essas senhas imediatamente após o primeiro acesso por questões de segurança.
+
+---
+
+## Modelo de Dados
+
+Estrutura completa do banco de dados, conforme implementado:
+
+- **`setores`**: id, nome, descrição, timestamps
+- **`cargos`**: id, nome, descrição, timestamps
+- **`roles` / `permissions`**: controle de perfis e permissões do sistema
+- **`users`**: id, nome, e-mail, `role` (`user`, `technician`, `admin`), `profile` (`Admin`, `Técnico`, `Usuário`), status, contato, setor, cargo, senha, timestamps
+- **`categorias`**: id, nome, descrição — ex: Hardware, Software, Rede, Acesso, Outros
+- **`prioridades`**: id, nome, nível (1=Baixa até 4=Crítica), cor de destaque
+- **`tickets`**: tabela principal de chamados — título, descrição, status (`open`, `in_progress`, `resolved`, `closed`), prioridade, categoria, solicitante, técnico responsável, solução, data de resolução
+- **`ticket_histories`**: linha do tempo — registro de todas as ações e alterações
+- **`ticket_attachments`**: arquivos enviados no chamado
+- **`comentarios`**: troca de mensagens entre usuários e equipe
+- **`faqs` e `artigos`**: base de conhecimento (opcional)
 
 ---
 
@@ -162,5 +201,5 @@ Projeto desenvolvido para a disciplina de **Laboratório de Engenharia de Softwa
 ## Licença
 
 Distribuído sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
-```
+````
 
