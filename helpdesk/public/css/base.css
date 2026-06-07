@@ -1,0 +1,33 @@
+/* ==========================================
+   CORES E CONFIGURAÇÕES GLOBAIS
+========================================== */
+
+:root {
+    /* Fundo */
+    --bg-primary: #020617;
+    --bg-secondary: #071227;
+    --bg-card: #0c1830;
+
+    /* Bordas */
+    --border-color: #1b3357;
+
+    /* Texto */
+    --text-primary: #ffffff;
+    --text-secondary: #7d8aa5;
+
+    /* Cores de destaque */
+    --blue: #3b82f6;
+    --green: #22c55e;
+    --yellow: #facc15;
+    --red: #ef4444;
+    --purple: #8b5cf6;
+    --pink: #ec4899;
+
+    /* Espaçamentos */
+    --radius: 16px;
+    --spacing: 20px;
+
+    /* Sombras */
+    --shadow:
+        0 4px 15px rgba(0,0,0,.25);
+}

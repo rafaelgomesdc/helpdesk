@@ -90,6 +90,8 @@
         .perm-chip { background:var(--bg-800); border:1px solid var(--border); border-radius:8px; padding:6px 12px; font-size:12px; }
         @media (max-width:768px) { .form-grid { grid-template-columns:1fr; } .sidebar { display:none; } }
     </style>
+    <link rel="stylesheet" href="/css/base.css">
+    @stack('styles')
 </head>
 <body>
 <header class="header">
@@ -124,6 +126,13 @@
                 <a href="{{ route('categorias.index') }}" class="nav-item {{ request()->routeIs('categorias.*') ? 'active' : '' }}">
                     <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>
                     Categorias
+                </a>
+                <a href="{{ route('tickets.index') }}" 
+                class="nav-item {{ request()->routeIs('tickets.index') ? 'active' : '' }}">
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path d="M4 6h16M4 10h16M4 14h16M4 18h16"/>
+                    </svg>
+                    Meus Chamados
                 </a>
             </nav>
 
