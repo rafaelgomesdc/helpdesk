@@ -16,8 +16,8 @@ Route::resource('categorias', CategoriaController::class);
 
 //Abertura e comunicação de chamados (Dupla 2)
 Route::get('/abrirChamado', [ChamadosController::class, 'viewAbrirChamado']); //Abrir chamado
-Route::get('/listarChamados', [TicketController::class, 'index'])->name('tickets.index');
-//Route::get('/listarChamados', [ChamadosController::class, 'viewListarChamados']); //Consultar chamados
+//Route::get('/listarChamados', [TicketController::class, 'index'])->name('tickets.index');
+Route::get('/listarChamados', [ChamadosController::class, 'viewListarChamados']); //Consultar chamados
 Route::get('/chamado', [ChamadosController::class, 'viewComunicacaoChamados']); //Consultar chamados
 
 Route::middleware(['auth'])->group(function () {
