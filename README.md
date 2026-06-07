@@ -85,19 +85,20 @@ Estrutura principal do banco de dados:
 
 ---
 
+```markdown
 ## Como Usar
 
 1. **Configurar o Banco de Dados**
-   - Execute o script SQL disponível na pasta `database/` para criar as tabelas e relações.
+   - Execute o script SQL disponível na pasta `database/` para criar as tabelas e relações no seu gerenciador de banco de dados (MySQL, phpMyAdmin ou similar).
 
 2. **Clonar o Repositório**
 ```bash
-git clone https://github.com/seu-usuario/helpdesk.git
+git clone https://github.com/rafaelgomesdc/helpdesk.git
 cd helpdesk
+```
 
 3. **Configurar a Conexão**
-
-Edite o arquivo de configuração da conexão com o banco de dados, localizado em `config/database.php`, inserindo as credenciais do seu ambiente:
+   - Edite o arquivo de configuração da conexão com o banco de dados, localizado em `config/database.php`, inserindo as credenciais do seu ambiente:
 
 ```php
 <?php
@@ -105,27 +106,23 @@ Edite o arquivo de configuração da conexão com o banco de dados, localizado e
 define('DB_HOST', 'localhost');     // Servidor do banco (geralmente localhost)
 define('DB_NAME', 'helpdesk');      // Nome do banco de dados criado
 define('DB_USER', 'root');          // Usuário do banco (padrão: root)
-
-```markdown
+define('DB_PASS', '');              // Senha do banco (em branco por padrão no XAMPP)
+define('DB_CHARSET', 'utf8mb4');    // Codificação de caracteres
+```
 
 > **Observação:** Se estiver utilizando um servidor de hospedagem, altere os valores conforme os dados fornecidos pelo provedor.
 
----
-
 4. **Executar o Sistema**
-
-Após configurar a conexão, siga os passos para rodar o sistema:
-
-1. Certifique-se de que o servidor Apache e o MySQL estão iniciados (no XAMPP/WAMP).
-2. Coloque a pasta do projeto dentro do diretório de hospedagem (`htdocs` no XAMPP).
-3. Acesse pelo navegador:
+   - Certifique-se de que o servidor Apache e o MySQL estão iniciados (no XAMPP/WAMP).
+   - Coloque a pasta do projeto dentro do diretório de hospedagem (`htdocs` no XAMPP).
+   - Acesse pelo navegador:
 ```
 http://localhost/helpdesk
 ```
 
 > **Acesso Inicial:**
 > O sistema já vem com um usuário administrador padrão para o primeiro acesso:
-> - **E-mail:** `admin@helpdesk.com`
+> - **E-mail:** `admin@sistema.com`
 > - **Senha:** `admin123`
 >
 > ⚠️ **Recomendação:** Altere essa senha imediatamente após o primeiro login por questões de segurança.
