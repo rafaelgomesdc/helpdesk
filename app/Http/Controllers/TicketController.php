@@ -44,6 +44,23 @@ class TicketController extends Controller
         return view('tickets.createChamado', compact('categorias', 'prioridades'));
     }
 
+    //Ver chamado específico
+    public function viewChamado($ticket_id)
+    {
+        /*
+        $tickets = Ticket::with('categoria')
+            ->where('user_id', Auth::id())
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
+        */
+        //$ticket_id = $_GET['id'];
+
+        $ticket = Ticket::with('categoria')
+            ->findOrFail($ticket_id);
+
+        return view('solicitante.comunicacaoChamado', compact('ticket'));
+    }
+
     /**
      * Salvar chamado + Upload de Anexos + Histórico
      */

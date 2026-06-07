@@ -50,7 +50,7 @@ Route::middleware('auth')->group(function () {
 Route::get('/abrirChamado', [ChamadosController::class, 'viewAbrirChamado']); //Abrir chamado
 //Route::get('/listarChamados', [TicketController::class, 'index'])->name('tickets.index');
 Route::get('/listarChamados', [ChamadosController::class, 'viewListarChamados']); //Consultar chamados
-Route::get('/chamado', [ChamadosController::class, 'viewComunicacaoChamados']); //Consultar chamados
+Route::get('/ticketEspecifico/{ticket_id}', [TicketController::class, 'viewChamado']); //Consultar chamados
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/meus-chamados', [TicketController::class, 'index'])->name('tickets.index');

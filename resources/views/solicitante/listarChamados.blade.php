@@ -20,15 +20,15 @@
                 <td>Cancelamento de conta</td>
                 <td>Alta</td>
                 <td>Em aberto</td>
-                <td><button class="btn btn-primary">Ver</button></td>
+                <td><a class="btn btn-primary">Ver</a></td>
             </tr>
             @foreach ($tickets as $t)
                 <tr class="table-line">
-                    <td>{{$c->id}}</td>
-                    <td>{{$c->titulo}}</td>
-                    <td>{{$c->prioridade}}</td>
-                    <td>{{$c->status}}</td>
-                    <td><button class="btn btn-primary">Ver</button></td>
+                    <td>{{$t->id}}</td>
+                    <td>{{$t->title}}</td>
+                    <td>{{$t->priority}}</td>
+                    <td>{{$t->status}}</td>
+                    <td><a class="btn btn-primary" href="{{ url('/ticketEspecifico/' . $t->id) }}">Ver</a></td>
                 </tr>
             @endforeach
         </table>
