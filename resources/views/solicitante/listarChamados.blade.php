@@ -15,13 +15,6 @@
                 <th>Status</th>
                 <th>Ações</th>
             </tr>
-            <tr class="table-line">
-                <td>1</td>
-                <td>Cancelamento de conta</td>
-                <td>Alta</td>
-                <td>Em aberto</td>
-                <td><a class="btn btn-primary">Ver</a></td>
-            </tr>
             @foreach ($tickets as $t)
                 <tr class="table-line">
                     <td>{{$t->id}}</td>

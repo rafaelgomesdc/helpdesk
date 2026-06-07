@@ -57,6 +57,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/chamados/novo', [TicketController::class, 'create'])->name('tickets.create');
     Route::post('/chamados/salvar', [TicketController::class, 'store'])->name('tickets.store');
     
-    Route::get('/chamados/{id}', [TicketController::class, 'show'])->name('tickets.show');
+    Route::get('/ticketEspecifico/{ticket_id}', [TicketController::class, 'viewChamado'])->name('tickets.show');
+    //Route::get('/chamados/{id}', [TicketController::class, 'show'])->name('tickets.show');
     Route::post('/chamados/{id}/comentar', [TicketController::class, 'storeComentario'])->name('tickets.comentario.store');
 });

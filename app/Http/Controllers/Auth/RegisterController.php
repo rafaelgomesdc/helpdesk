@@ -46,7 +46,7 @@ class RegisterController extends Controller
             'role' => User::profileToRoleEnum($data['profile']),
             'security_question' => $data['question'],
             'security_answer' => $data['answer'],
-            'status' => 'Ativo',
+            'status' => 'Pendente',
         ]);
 
         return redirect()
