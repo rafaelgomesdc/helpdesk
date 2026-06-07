@@ -58,7 +58,9 @@ class TicketController extends Controller
         $ticket = Ticket::with('categoria')
             ->findOrFail($ticket_id);
 
-        return view('solicitante.comunicacaoChamado', compact('ticket'));
+        $comentarios = Comentario::where('ticket_id', $ticket_id)->get();
+
+        return view('solicitante.comunicacaoChamado', compact('ticket', 'comentarios'));
     }
 
     /**
