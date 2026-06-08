@@ -89,5 +89,22 @@ class TechnicianController extends Controller
 
         return redirect()->route('technician.in-progress')
             ->with('success', 'Solução registrada! Chamado #' . $ticket->id . ' marcado como Resolvido.');
+
+        
+    }
+
+    public function pending()
+    {
+        $tickets = Ticket::where('status', 'open')
+            ->with(['user'])
+            ->orderBy('created_at', 'desc')
+            ->paginate(15);
+        return view('technician.pending', compact('tickets'));
+    }
+
+    public function history($id)
+    {
+        $ticket = Ticket::with('histories.user')->findOrFail($id);
+        return view('technician.history', compact('ticket'));
     }
 }
