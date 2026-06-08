@@ -3,79 +3,112 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Help Desk - Sistema de Chamados</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>@yield('title', 'Help Desk')</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --bg-950:#020617; --bg-900:#0f172a; --bg-850:#131e2e; --bg-800:#1e293b; --bg-700:#334155;
+            --border:rgba(148,163,184,0.08); --text-primary:#f1f5f9; --text-secondary:#94a3b8; --text-muted:#475569;
+            --blue-600:#2563eb; --blue-500:#3b82f6; --blue-400:#60a5fa;
+            --emerald:#10b981; --amber:#f59e0b; --rose:#f43f5e;
+        }
+        body { font-family:'Inter',sans-serif; background:var(--bg-950); color:var(--text-primary); min-height:100vh; display:flex; flex-direction:column; }
+        .header { height:56px; background:var(--bg-900); border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; padding:0 24px; position:sticky; top:0; z-index:40; }
+        .hbrand { display:flex; align-items:center; gap:10px; }
+        .hbrand-icon { width:30px; height:30px; background:linear-gradient(135deg,var(--blue-600),#7c3aed); border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:15px; }
+        .hbrand-name { font-family:'IBM Plex Mono',monospace; font-size:13px; font-weight:700; color:var(--text-primary); }
+        .hbrand-sub { font-family:'IBM Plex Mono',monospace; font-size:9px; color:var(--text-muted); letter-spacing:1px; text-transform:uppercase; }
+        .hbadge { background:var(--bg-800); border:1px solid var(--border); border-radius:20px; padding:4px 12px; font-size:11px; color:var(--text-secondary); font-family:'IBM Plex Mono',monospace; }
+        .layout { display:flex; flex:1; overflow:hidden; }
+        .sidebar { width:240px; flex-shrink:0; background:var(--bg-900); border-right:1px solid var(--border); display:flex; flex-direction:column; justify-content:space-between; padding:24px 0; position:sticky; top:56px; height:calc(100vh - 56px); overflow-y:auto; }
+        .sidebar-label { font-family:'IBM Plex Mono',monospace; font-size:9px; font-weight:800; letter-spacing:2px; text-transform:uppercase; color:var(--text-muted); padding:0 16px; margin-bottom:6px; margin-top:12px; }
+        .sidebar-nav { padding:0 12px; }
+        .nav-item { display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:10px; font-size:12px; font-weight:500; color:var(--text-secondary); text-decoration:none; transition:all 0.15s; margin-bottom:2px; }
+        .nav-item:hover { color:var(--text-primary); background:var(--bg-800); }
+        .nav-item.active { background:var(--blue-600); color:#fff; font-weight:700; }
+        .nav-item svg { width:15px; height:15px; flex-shrink:0; }
+        .sidebar-footer { padding:16px; border-top:1px solid var(--border); font-family:'IBM Plex Mono',monospace; font-size:9px; color:var(--text-muted); }
+        main { flex:1; overflow-y:auto; padding:32px 40px; }
+        .flash { display:flex; align-items:center; gap:10px; padding:12px 16px; background:rgba(16,185,129,0.08); border:1px solid rgba(16,185,129,0.2); border-radius:10px; color:#34d399; font-size:13px; margin-bottom:20px; }
+        .flash-error { background:rgba(244,63,94,0.08); border-color:rgba(244,63,94,0.2); color:#fb7185; }
+        .page-header { display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:28px; gap:16px; flex-wrap:wrap; }
+        .page-title { font-size:22px; font-weight:700; color:var(--text-primary); letter-spacing:-0.5px; }
+        .page-subtitle { font-size:13px; color:var(--text-muted); margin-top:4px; }
+        .table-wrap { background:var(--bg-900); border:1px solid var(--border); border-radius:14px; overflow:hidden; }
+        .table-header { display:flex; align-items:center; justify-content:space-between; padding:16px 20px; border-bottom:1px solid var(--border); }
+        .table-title { font-size:13px; font-weight:600; color:var(--text-primary); }
+        table { width:100%; border-collapse:collapse; }
+        thead th { text-align:left; font-size:10px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:var(--text-muted); font-family:'IBM Plex Mono',monospace; padding:12px 20px; border-bottom:1px solid var(--border); background:var(--bg-850); }
+        tbody td { padding:14px 20px; font-size:13px; color:var(--text-secondary); border-bottom:1px solid var(--border); vertical-align:middle; }
+        tbody tr:last-child td { border-bottom:none; }
+        tbody tr:hover td { background:var(--bg-850); }
+        .btn { display:inline-flex; align-items:center; gap:6px; padding:8px 14px; border-radius:8px; font-size:12px; font-weight:600; cursor:pointer; border:none; text-decoration:none; transition:all 0.15s; font-family:'Inter',sans-serif; }
+        .btn-primary{background:var(--blue-600);color:#fff;} .btn-primary:hover{background:var(--blue-500);}
+        .btn-ghost{background:var(--bg-800);border:1px solid var(--border);color:var(--text-secondary);} .btn-ghost:hover{color:var(--text-primary);background:var(--bg-700);}
+        .btn-danger{background:rgba(244,63,94,0.1);border:1px solid rgba(244,63,94,0.2);color:#fb7185;} .btn-danger:hover{background:rgba(244,63,94,0.2);}
+        .btn-sm{padding:5px 10px;font-size:11px;}
+        .form-card { background:var(--bg-900); border:1px solid var(--border); border-radius:14px; padding:28px; max-width:600px; }
+        .form-group { margin-bottom:18px; }
+        .form-label { display:block; font-size:11px; font-weight:600; letter-spacing:0.5px; text-transform:uppercase; color:var(--text-muted); font-family:'IBM Plex Mono',monospace; margin-bottom:8px; }
+        .form-input,.form-textarea,.form-select { width:100%; background:var(--bg-850); border:1px solid var(--border); border-radius:8px; padding:10px 14px; font-size:13px; color:var(--text-primary); font-family:'Inter',sans-serif; outline:none; transition:border-color 0.15s; }
+        .form-input:focus,.form-textarea:focus,.form-select:focus { border-color:var(--blue-500); box-shadow:0 0 0 3px rgba(59,130,246,0.1); }
+        .form-textarea { resize:vertical; min-height:100px; }
+        .form-error { font-size:11px; color:#fb7185; margin-top:5px; }
+        .form-actions { display:flex; gap:10px; margin-top:24px; padding-top:20px; border-top:1px solid var(--border); }
+        .empty-state { text-align:center; padding:48px 20px; color:var(--text-muted); }
+        .empty-icon { font-size:32px; margin-bottom:12px; }
+        .empty-text { font-size:14px; }
+    </style>
 </head>
 <body>
-
-<!-- Menu de Navegação -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-4">
-    <div class="container">
-        <a class="navbar-brand" href="{{ route('users.index') }}">Help Desk</a>
-        <div class="collapse navbar-collapse">
-            <ul class="navbar-nav me-auto">
-
-                @if(session('user_role') == 'admin' || session('user_role') == 'technician')
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('users.index') }}">Usuários</a>
-                    </li>
-                @endif
-
-                @if(session('user_role') == 'user')
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('users.show', session('user_id')) }}">Meu Perfil</a>
-                    </li>
-                @endif
-
-                @if(session('user_role') == 'admin')
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('cargos.index') }}">Cargos</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('setores.index') }}">Setores</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('prioridades.index') }}">Prioridades</a>
-                    </li>
-                @endif
-
-            </ul>
-
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <span class="nav-link text-white">Olá, {{ session('user_name') }}</span>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white"
-                       href="{{ route('logout') }}"
-                       onclick="return confirm('Sair do sistema?')">Sair</a>
-                </li>
-            </ul>
+<header class="header">
+    <div class="hbrand">
+        <div class="hbrand-icon">🎧</div>
+        <div>
+            <div class="hbrand-name">Help Desk</div>
+            <div class="hbrand-sub">Portal de Suporte</div>
         </div>
     </div>
-</nav>
+    <div style="display:flex; align-items:center; gap:12px;">
+        @if(session('user_name'))
+            <span class="hbadge">{{ session('user_name') }} · {{ session('user_role') }}</span>
+            <a href="{{ route('logout') }}" class="btn btn-ghost btn-sm"
+               onclick="return confirm('Sair do sistema?')">Sair</a>
+        @else
+            <span class="hbadge">Fatec Prudente</span>
+        @endif
+    </div>
+</header>
 
-<!-- Conteúdo Principal -->
-<div class="container">
-    @if(session('sucesso'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            {{ session('sucesso') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+<div class="layout">
+    <aside class="sidebar">
+        <div>
+            @if(session('user_role') == 'admin')
+            <div class="sidebar-label">Configurações</div>
+            <nav class="sidebar-nav">
+                <a href="{{ route('prioridades.index') }}"
+                   class="nav-item {{ request()->routeIs('prioridades.*') ? 'active' : '' }}">
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"/>
+                    </svg>
+                    Prioridades
+                </a>
+            </nav>
+            @endif
         </div>
-    @endif
+        <div class="sidebar-footer">Programação Web · Laravel</div>
+    </aside>
 
-    @if(session('erro'))
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            {{ session('erro') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-        </div>
-    @endif
-
-    @yield('conteudo')
+    <main>
+        @if(session('sucesso'))
+            <div class="flash">✓ {{ session('sucesso') }}</div>
+        @endif
+        @if(session('erro'))
+            <div class="flash flash-error">✗ {{ session('erro') }}</div>
+        @endif
+        @yield('content')
+    </main>
 </div>
-
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

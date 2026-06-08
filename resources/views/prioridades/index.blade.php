@@ -1,67 +1,73 @@
 @extends('layouts.app')
+@section('title', 'Prioridades')
+@section('content')
 
-@section('conteudo')
-<div class="d-flex justify-content-between align-items-center mb-3">
-    <h2>Gerenciar Prioridades</h2>
+<div class="page-header">
+    <div>
+        <h1 class="page-title">Prioridades</h1>
+        <p class="page-subtitle">Gerencie os níveis de prioridade dos chamados</p>
+    </div>
     <a href="{{ route('prioridades.create') }}" class="btn btn-primary">+ Nova Prioridade</a>
 </div>
 
-<div class="card shadow">
-    <div class="card-body">
-        <div class="table-responsive">
-            <table class="table table-striped table-hover">
-                <thead class="table-dark">
-                    <tr>
-                        <th>Nome</th>
-                        <th>Nível</th>
-                        <th>Cor</th>
-                        <th width="180">Ações</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @forelse($prioridades as $prioridade)
-                    <tr>
-                        <td>
-                            <span class="badge"
-                                  style="background-color: {{ $prioridade->cor }}; color: #fff; font-size: 0.9em;">
-                                {{ $prioridade->nome }}
-                            </span>
-                        </td>
-                        <td>{{ $prioridade->nivel }}</td>
-                        <td>
-                            <div class="d-flex align-items-center gap-2">
-                                <span style="display:inline-block; width:24px; height:24px;
-                                             border-radius:4px; background-color:{{ $prioridade->cor }};
-                                             border:1px solid #ccc;"></span>
-                                <code>{{ $prioridade->cor }}</code>
-                            </div>
-                        </td>
-                        <td>
-                            <a href="{{ route('prioridades.edit', $prioridade) }}"
-                               class="btn btn-sm btn-outline-secondary">Editar</a>
-                            <form method="POST"
-                                  action="{{ route('prioridades.destroy', $prioridade) }}"
-                                  class="d-inline">
+<div class="table-wrap">
+    <div class="table-header">
+        <span class="table-title">{{ $prioridades->count() }} prioridade(s) cadastrada(s)</span>
+    </div>
+
+    @if($prioridades->isEmpty())
+        <div class="empty-state">
+            <div class="empty-icon">🚦</div>
+            <div class="empty-text">Nenhuma prioridade cadastrada ainda.</div>
+        </div>
+    @else
+        <table>
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Nível</th>
+                    <th>Cor</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($prioridades as $prioridade)
+                <tr>
+                    <td>
+                        <span style="display:inline-flex; align-items:center; gap:8px;">
+                            <span style="width:10px; height:10px; border-radius:50%; background-color:{{ $prioridade->cor }};"></span>
+                            <span style="font-weight:600; color:var(--text-primary);">{{ $prioridade->nome }}</span>
+                        </span>
+                    </td>
+                    <td>
+                        <span style="font-family:'IBM Plex Mono',monospace; font-size:12px;">{{ $prioridade->nivel }}</span>
+                    </td>
+                    <td>
+                        <span style="display:inline-flex; align-items:center; gap:8px;">
+                            <span style="width:20px; height:20px; border-radius:4px; background-color:{{ $prioridade->cor }}; border:1px solid var(--border);"></span>
+                            <code style="font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--text-muted);">{{ $prioridade->cor }}</code>
+                        </span>
+                    </td>
+                    <td>
+                        <div style="display:flex; gap:6px;">
+                            <a href="{{ route('prioridades.edit', $prioridade) }}" class="btn btn-ghost btn-sm">
+                                ✏️ Editar
+                            </a>
+                            <form method="POST" action="{{ route('prioridades.destroy', $prioridade) }}" style="display:inline">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit"
-                                        class="btn btn-sm btn-outline-danger"
-                                        onclick="return confirm('Deseja excluir a prioridade \'{{ $prioridade->nome }}\'?')">
-                                    Excluir
+                                <button type="submit" class="btn btn-danger btn-sm"
+                                    onclick="return confirm('Excluir a prioridade \'{{ $prioridade->nome }}\'?')">
+                                    🗑 Excluir
                                 </button>
                             </form>
-                        </td>
-                    </tr>
-                    @empty
-                    <tr>
-                        <td colspan="4" class="text-center text-muted py-4">
-                            Nenhuma prioridade cadastrada.
-                        </td>
-                    </tr>
-                    @endforelse
-                </tbody>
-            </table>
-        </div>
-    </div>
+                        </div>
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+    @endif
 </div>
+
 @endsection
