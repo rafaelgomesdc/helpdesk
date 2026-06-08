@@ -1,45 +1,50 @@
 @extends('layouts.app')
+@section('title', 'Nova FAQ')
+@section('content')
 
-@section('conteudo')
-<h2 class="mb-3">Nova FAQ</h2>
-
-<div class="card shadow">
-    <div class="card-body">
-        <form method="POST" action="{{ route('faqs.store') }}">
-            @csrf
-
-            <div class="mb-3">
-                <label class="form-label">Categoria</label>
-                <select name="categoria_id" class="form-select">
-                    <option value="">— Sem categoria —</option>
-                    @foreach($categorias as $cat)
-                        <option value="{{ $cat->id }}" {{ old('categoria_id') == $cat->id ? 'selected' : '' }}>
-                            {{ $cat->nome }}
-                        </option>
-                    @endforeach
-                </select>
-                @error('categoria_id') <small class="text-danger">{{ $message }}</small> @enderror
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Pergunta</label>
-                <textarea name="pergunta" class="form-control" rows="3"
-                          required placeholder="Digite a pergunta...">{{ old('pergunta') }}</textarea>
-                @error('pergunta') <small class="text-danger">{{ $message }}</small> @enderror
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Resposta</label>
-                <textarea name="resposta" class="form-control" rows="6"
-                          required placeholder="Digite a resposta completa...">{{ old('resposta') }}</textarea>
-                @error('resposta') <small class="text-danger">{{ $message }}</small> @enderror
-            </div>
-
-            <div class="mt-4">
-                <button type="submit" class="btn btn-primary">Salvar</button>
-                <a href="{{ route('faqs.index') }}" class="btn btn-secondary">Cancelar</a>
-            </div>
-        </form>
+<div class="page-header">
+    <div>
+        <h1 class="page-title">Nova FAQ</h1>
+        <p class="page-subtitle">Adicione uma nova pergunta e resposta à base de conhecimento</p>
     </div>
 </div>
+
+<div class="form-card">
+    <form method="POST" action="{{ route('faqs.store') }}">
+        @csrf
+
+        <div class="form-group">
+            <label class="form-label">Categoria</label>
+            <select name="categoria_id" class="form-select">
+                <option value="">— Sem categoria —</option>
+                @foreach($categorias as $cat)
+                    <option value="{{ $cat->id }}" {{ old('categoria_id') == $cat->id ? 'selected' : '' }}>
+                        {{ $cat->nome }}
+                    </option>
+                @endforeach
+            </select>
+            @error('categoria_id') <div class="form-error">{{ $message }}</div> @enderror
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Pergunta *</label>
+            <textarea name="pergunta" class="form-textarea" rows="3"
+                      required placeholder="Digite a pergunta...">{{ old('pergunta') }}</textarea>
+            @error('pergunta') <div class="form-error">{{ $message }}</div> @enderror
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Resposta *</label>
+            <textarea name="resposta" class="form-textarea" rows="7"
+                      required placeholder="Digite a resposta completa...">{{ old('resposta') }}</textarea>
+            @error('resposta') <div class="form-error">{{ $message }}</div> @enderror
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">✓ Salvar FAQ</button>
+            <a href="{{ route('faqs.index') }}" class="btn btn-ghost">Cancelar</a>
+        </div>
+    </form>
+</div>
+
 @endsection

@@ -1,15 +1,28 @@
 @extends('layouts.app')
+@section('title', 'Categorias')
+@section('content')
 
-@section('conteudo')
-<div class="d-flex justify-content-between align-items-center mb-3">
-    <h2>Gerenciar Categorias</h2>
+<div class="page-header">
+    <div>
+        <h1 class="page-title">Categorias</h1>
+        <p class="page-subtitle">Organize FAQs e artigos por categoria</p>
+    </div>
     <a href="{{ route('categorias.create') }}" class="btn btn-primary">+ Nova Categoria</a>
 </div>
 
-<div class="card shadow">
-    <div class="card-body">
-        <table class="table table-striped">
-            <thead class="table-dark">
+<div class="table-wrap">
+    <div class="table-header">
+        <span class="table-title">{{ $categorias->count() }} categoria(s) cadastrada(s)</span>
+    </div>
+
+    @if($categorias->isEmpty())
+        <div class="empty-state">
+            <div class="empty-icon">🏷️</div>
+            <div class="empty-text">Nenhuma categoria cadastrada ainda.</div>
+        </div>
+    @else
+        <table>
+            <thead>
                 <tr>
                     <th>Nome</th>
                     <th>Descrição</th>
@@ -19,28 +32,35 @@
                 </tr>
             </thead>
             <tbody>
-                @forelse($categorias as $categoria)
+                @foreach($categorias as $categoria)
                 <tr>
-                    <td>{{ $categoria->nome }}</td>
-                    <td>{{ $categoria->descricao ?? '-' }}</td>
-                    <td>{{ $categoria->faqs_count ?? $categoria->faqs->count() }}</td>
-                    <td>{{ $categoria->artigos_count ?? $categoria->artigos->count() }}</td>
+                    <td style="font-weight:600; color:var(--text-primary);">{{ $categoria->nome }}</td>
+                    <td>{{ $categoria->descricao ?? '—' }}</td>
+                    <td style="font-family:'IBM Plex Mono',monospace; font-size:12px;">
+                        {{ $categoria->faqs_count ?? $categoria->faqs->count() }}
+                    </td>
+                    <td style="font-family:'IBM Plex Mono',monospace; font-size:12px;">
+                        {{ $categoria->artigos_count ?? $categoria->artigos->count() }}
+                    </td>
                     <td>
-                        <a href="{{ route('categorias.edit', $categoria) }}" class="btn btn-sm btn-outline-secondary">Editar</a>
-                        <form method="POST" action="{{ route('categorias.destroy', $categoria) }}" class="d-inline">
-                            @csrf @method('DELETE')
-                            <button type="submit" class="btn btn-sm btn-outline-danger"
-                                onclick="return confirm('Excluir esta categoria?')">Excluir</button>
-                        </form>
+                        <div style="display:flex; gap:6px;">
+                            <a href="{{ route('categorias.edit', $categoria) }}" class="btn btn-ghost btn-sm">
+                                ✏️ Editar
+                            </a>
+                            <form method="POST" action="{{ route('categorias.destroy', $categoria) }}" style="display:inline">
+                                @csrf @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-sm"
+                                    onclick="return confirm('Excluir a categoria \'{{ $categoria->nome }}\'?')">
+                                    🗑 Excluir
+                                </button>
+                            </form>
+                        </div>
                     </td>
                 </tr>
-                @empty
-                <tr>
-                    <td colspan="5" class="text-center text-muted">Nenhuma categoria cadastrada.</td>
-                </tr>
-                @endforelse
+                @endforeach
             </tbody>
         </table>
-    </div>
+    @endif
 </div>
+
 @endsection

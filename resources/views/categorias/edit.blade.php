@@ -1,31 +1,36 @@
 @extends('layouts.app')
+@section('title', 'Editar Categoria')
+@section('content')
 
-@section('conteudo')
-<h2 class="mb-3">Editar Categoria</h2>
-
-<div class="card shadow">
-    <div class="card-body">
-        <form method="POST" action="{{ route('categorias.update', $categoria) }}">
-            @csrf
-            @method('PUT')
-
-            <div class="mb-3">
-                <label class="form-label">Nome</label>
-                <input type="text" name="nome" class="form-control"
-                       value="{{ old('nome', $categoria->nome) }}" required maxlength="100">
-                @error('nome') <small class="text-danger">{{ $message }}</small> @enderror
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Descrição</label>
-                <textarea name="descricao" class="form-control" rows="3">{{ old('descricao', $categoria->descricao) }}</textarea>
-            </div>
-
-            <div class="mt-4">
-                <button type="submit" class="btn btn-primary">Salvar Alterações</button>
-                <a href="{{ route('categorias.index') }}" class="btn btn-secondary">Cancelar</a>
-            </div>
-        </form>
+<div class="page-header">
+    <div>
+        <h1 class="page-title">Editar Categoria</h1>
+        <p class="page-subtitle">Atualize as informações da categoria</p>
     </div>
 </div>
+
+<div class="form-card" style="max-width:560px;">
+    <form method="POST" action="{{ route('categorias.update', $categoria) }}">
+        @csrf
+        @method('PUT')
+
+        <div class="form-group">
+            <label class="form-label">Nome *</label>
+            <input type="text" name="nome" class="form-input"
+                   value="{{ old('nome', $categoria->nome) }}" required maxlength="100">
+            @error('nome') <div class="form-error">{{ $message }}</div> @enderror
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Descrição</label>
+            <textarea name="descricao" class="form-textarea" rows="3">{{ old('descricao', $categoria->descricao) }}</textarea>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">✓ Salvar Alterações</button>
+            <a href="{{ route('categorias.index') }}" class="btn btn-ghost">Cancelar</a>
+        </div>
+    </form>
+</div>
+
 @endsection
