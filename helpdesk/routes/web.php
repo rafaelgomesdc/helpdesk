@@ -11,6 +11,10 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SetorController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\TicketController;
+use App\Http\Controllers\PrioridadeController;
+use App\Http\Controllers\RelatorioController;
+use App\Http\Controllers\FaqController;
+use App\Http\Controllers\ArtigoController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -41,7 +45,16 @@ Route::middleware('auth')->group(function () {
         Route::resource('cargos', CargoController::class)->except(['show']);
         Route::resource('roles', RoleController::class)->except(['show']);
         Route::resource('permissions', PermissionController::class)->except(['show']);
+        Route::resource('prioridades', PrioridadeController::class);
     });
+
+    // Relatórios (admin e técnico)
+    Route::get('/relatorios/tempo-medio', [RelatorioController::class, 'tempoMedio'])
+         ->name('relatorios.tempo-medio');
+
+    // Base de Conhecimento (todos autenticados)
+    Route::resource('faqs', FaqController::class);
+    Route::resource('artigos', ArtigoController::class);
 });
 
 //Abertura e comunicação de chamados (Dupla 2)

@@ -162,7 +162,40 @@
                 </a>
             </nav>
             @endif
+
+            @if(auth()->user()->isAdmin())
+            <div class="sidebar-label">Configurações</div>
+            <nav class="sidebar-nav">
+                <a href="{{ route('prioridades.index') }}" class="nav-item {{ request()->routeIs('prioridades.*') ? 'active' : '' }}">
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"/></svg>
+                    Prioridades
+                </a>
+            </nav>
+            @endif
+
+            @if(auth()->user()->isAdmin() || auth()->user()->profile === 'Technician')
+            <div class="sidebar-label">Análises</div>
+            <nav class="sidebar-nav">
+                <a href="{{ route('relatorios.tempo-medio') }}" class="nav-item {{ request()->routeIs('relatorios.*') ? 'active' : '' }}">
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+                    Tempo Médio
+                </a>
+            </nav>
+            @endif
+
             @endauth
+
+            <div class="sidebar-label">Base de Conhecimento</div>
+            <nav class="sidebar-nav">
+                <a href="{{ route('faqs.index') }}" class="nav-item {{ request()->routeIs('faqs.*') ? 'active' : '' }}">
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    FAQs
+                </a>
+                <a href="{{ route('artigos.index') }}" class="nav-item {{ request()->routeIs('artigos.*') ? 'active' : '' }}">
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                    Artigos
+                </a>
+            </nav>
         </div>
         <div class="sidebar-footer">Programação Web · Laravel</div>
     </aside>
