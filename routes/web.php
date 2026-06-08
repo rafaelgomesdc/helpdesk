@@ -12,4 +12,6 @@ Route::prefix('tecnico')->name('technician.')->group(function () {
     Route::post('/chamados/{id}/atribuir', [TechnicianController::class, 'assign'])->name('assign');
     Route::get('/chamados/{id}/solucao',   [TechnicianController::class, 'solutionForm'])->name('solution');
     Route::post('/chamados/{id}/solucao',  [TechnicianController::class, 'saveSolution'])->name('save-solution');
+    Route::get('/pendentes',       [TechnicianController::class, 'pending'])->name('pendentes');
+    Route::get('/historico/{id}',  [TechnicianController::class, 'history'])->name('historico');
 });
