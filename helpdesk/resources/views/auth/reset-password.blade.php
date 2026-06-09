@@ -2,92 +2,101 @@
 
 @section('title', 'Portal de Service Desk - Recuperar Senha')
 
-@section('width', 'max-w-xl')
-
 @section('content')
-  <div class="bg-slate-900/85 backdrop-blur-xl border border-slate-800 rounded-3xl p-8 shadow-2xl transition-all duration-300">
+  <style>
+    .hidden {
+      display: none !important;
+    }
+  </style>
 
-    <div class="text-center mb-6">
-      <div class="inline-flex items-center justify-center p-4 bg-gradient-to-br from-amber-500/20 to-orange-500/10 border border-amber-500/35 text-amber-400 rounded-2xl mb-4 shadow-lg shadow-amber-500/5">
-        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-8 h-8"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+  <div class="portal-card">
+
+    <div class="text-center mb-4">
+      <div class="portal-title-icon" style="border-color: rgba(245, 158, 11, 0.3); color: var(--amber-500); background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), rgba(249, 115, 22, 0.1));">
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 2rem; height: 2rem;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
       </div>
-      <h1 class="text-2xl font-bold tracking-tight text-white font-sans">Recuperação de Senha</h1>
-      <p class="text-slate-400 text-sm mt-1.5 font-sans max-w-md mx-auto">Resgate seu acesso corporativo usando perguntas secretas criptografadas.</p>
+      <h1 class="h4 fw-bold text-white mb-2">Recuperação de Senha</h1>
+      <p class="text-secondary small max-w-md mx-auto mb-0">Resgate seu acesso corporativo usando perguntas secretas criptografadas.</p>
     </div>
 
-    <div id="error-banner" class="hidden mb-6 p-4 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-200 text-xs flex items-start gap-3">
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 flex-shrink-0 text-rose-400 mt-0.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+    <!-- Banner de Erro -->
+    <div id="error-banner" class="alert-portal alert-portal-danger hidden">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; margin-top:2px;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
       <div>
-        <p class="font-semibold text-rose-400">Falha no Processo</p>
-        <p id="error-message" class="text-[11px] text-rose-350/80 mt-0.5"></p>
+        <p class="fw-bold mb-1" style="color: #fda4af;">Falha no Processo</p>
+        <p id="error-message" class="mb-0 text-white-50 small" style="font-size: 11px;"></p>
       </div>
     </div>
 
-    <div id="success-banner" class="hidden mb-6 p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-200 text-xs flex items-start gap-3">
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 flex-shrink-0 text-emerald-400 mt-0.5"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275Z"></path></svg>
+    <!-- Banner de Sucesso -->
+    <div id="success-banner" class="alert-portal alert-portal-success hidden">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; margin-top:2px;"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275Z"></path></svg>
       <div>
-        <p class="font-semibold text-emerald-400">Sucesso Corporativo</p>
-        <p id="success-message" class="text-[11px] text-emerald-350/80 mt-0.5"></p>
+        <p class="fw-bold mb-1" style="color: #6ee7b7;">Sucesso Corporativo</p>
+        <p id="success-message" class="mb-0 text-white-50 small" style="font-size: 11px;"></p>
       </div>
     </div>
 
-    <form id="recovery-step1" onsubmit="handleFindEmail(event)" class="space-y-4">
-      <div class="space-y-1">
-        <h3 class="text-sm font-bold text-white flex items-center gap-2">
-          <span class="text-amber-400">01</span> Identificar Colaborador
+    <!-- Etapa 1: Identificar Colaborador -->
+    <form id="recovery-step1" onsubmit="handleFindEmail(event)">
+      <div class="mb-3">
+        <h3 class="h6 fw-bold text-white mb-1">
+          <span style="color: var(--amber-500);">01</span> Identificar Colaborador
         </h3>
-        <p class="text-slate-400 text-xs">Para iniciar o restauro seguro, digite seu e-mail corporativo cadastrado.</p>
+        <p class="text-secondary small">Para iniciar o restauro seguro, digite seu e-mail corporativo cadastrado.</p>
       </div>
-      <div>
-        <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">E-mail Cadastrado</label>
-        <input id="recovery-email-input" type="email" placeholder="ex: admin@helpdesk.com" class="w-full bg-slate-950/80 border border-slate-800 rounded-xl px-4 py-3 text-slate-200 placeholder-slate-650 text-sm focus:outline-none focus:border-blue-500 transition-colors font-mono" required>
+      <div class="mb-4">
+        <label class="portal-label">E-mail Cadastrado</label>
+        <input id="recovery-email-input" type="email" placeholder="ex: admin@helpdesk.com" class="portal-control" required>
       </div>
-      <div class="flex gap-3 pt-2">
-        <a href="{{ route('login') }}" class="w-1/2 border border-slate-800 hover:bg-slate-850 text-slate-400 hover:text-slate-200 py-3 rounded-xl text-xs font-semibold uppercase tracking-wider transition-colors text-center cursor-pointer">Cancelar</a>
-        <button type="submit" class="w-1/2 bg-blue-600 hover:bg-blue-500 text-white py-3 rounded-xl text-xs font-semibold uppercase tracking-wider transition-all cursor-pointer">Localizar Registro</button>
+      <div class="d-flex gap-3 pt-2">
+        <a href="{{ route('login') }}" class="portal-btn-primary w-50" style="background: transparent; border: 1px solid var(--border); color: var(--text-secondary);">Cancelar</a>
+        <button type="submit" class="portal-btn-primary w-50">Localizar Registro</button>
       </div>
     </form>
 
-    <form id="recovery-step2" onsubmit="handleVerifyAnswer(event)" class="hidden space-y-5">
-      <div class="space-y-1">
-        <h3 class="text-sm font-bold text-white flex items-center gap-2">
-          <span class="text-amber-400">02</span> Responder Questão Secundária
+    <!-- Etapa 2: Responder Questão Secundária -->
+    <form id="recovery-step2" onsubmit="handleVerifyAnswer(event)" class="hidden">
+      <div class="mb-3">
+        <h3 class="h6 fw-bold text-white mb-1">
+          <span style="color: var(--amber-500);">02</span> Responder Questão Secundária
         </h3>
-        <p class="text-slate-400 text-xs leading-relaxed">Conta localizada: <span id="recovery-user-name" class="text-blue-400 font-semibold"></span>. Responda à questão pessoal guardada na criação de sua credencial.</p>
+        <p class="text-secondary small">Conta localizada: <span id="recovery-user-name" class="fw-bold" style="color: var(--blue-500);"></span>. Responda à questão pessoal guardada na criação de sua credencial.</p>
       </div>
-      <div class="p-3.5 bg-slate-950/60 border border-slate-800 rounded-xl">
-        <span class="block text-[10px] uppercase font-mono font-bold text-slate-500 tracking-wide mb-1 select-none">Questão Definida:</span>
-        <span id="recovery-question-text" class="text-xs text-white font-medium italic"></span>
+      <div class="p-3 mb-3 rounded" style="background: rgba(2, 6, 23, 0.6); border: 1px solid rgba(148, 163, 184, 0.08);">
+        <span class="d-block portal-label mb-1" style="color: var(--text-muted);">Questão Definida:</span>
+        <span id="recovery-question-text" class="small text-white fst-italic fw-medium"></span>
       </div>
-      <div>
-        <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">Sua Resposta</label>
-        <input id="security-answer-input" type="text" placeholder="Digite a resposta confidencial..." class="w-full bg-slate-950/80 border border-slate-800 rounded-xl px-4 py-3 text-slate-200 text-sm focus:outline-none focus:border-blue-500 transition-colors" required>
+      <div class="mb-4">
+        <label class="portal-label">Sua Resposta</label>
+        <input id="security-answer-input" type="text" placeholder="Digite a resposta confidencial..." class="portal-control" required>
       </div>
-      <div class="flex gap-3 pt-2">
-        <button type="button" onclick="backToStep1()" class="w-1/2 border border-slate-800 hover:bg-slate-850 text-slate-400 hover:text-slate-200 py-3 rounded-xl text-xs font-semibold uppercase tracking-wider transition-colors cursor-pointer">Voltar</button>
-        <button type="submit" class="w-1/2 bg-blue-600 hover:bg-blue-500 text-white py-3 rounded-xl text-xs font-semibold uppercase tracking-wider transition-all cursor-pointer">Confirmar Resposta</button>
+      <div class="d-flex gap-3 pt-2">
+        <button type="button" onclick="backToStep1()" class="portal-btn-primary w-50" style="background: transparent; border: 1px solid var(--border); color: var(--text-secondary);">Voltar</button>
+        <button type="submit" class="portal-btn-primary w-50">Confirmar Resposta</button>
       </div>
     </form>
 
-    <form id="recovery-step3" onsubmit="handleResetPassword(event)" class="hidden space-y-5">
-      <div class="space-y-1">
-        <h3 class="text-sm font-bold text-white flex items-center gap-2">
-          <span class="text-emerald-400">03</span> Gravar Credencial Nova
+    <!-- Etapa 3: Gravar Credencial Nova -->
+    <form id="recovery-step3" onsubmit="handleResetPassword(event)" class="hidden">
+      <div class="mb-3">
+        <h3 class="h6 fw-bold text-white mb-1">
+          <span style="color: var(--emerald-500);">03</span> Gravar Credencial Nova
         </h3>
-        <p class="text-slate-400 text-xs">Verificação concluída com sucesso! Redefina com segurança a sua nova chave.</p>
+        <p class="text-secondary small">Verificação concluída com sucesso! Redefina com segurança a sua nova chave.</p>
       </div>
-      <div>
-        <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">Nova Senha Corporativa</label>
-        <div class="relative">
-          <input id="new-password-input" type="password" placeholder="Digite ao menos 6 caracteres" class="w-full bg-slate-950/80 border border-slate-800 rounded-xl pl-4 pr-10 py-3 text-slate-200 placeholder-slate-650 text-sm focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all font-mono" required>
-          <button type="button" onclick="togglePasswordVisibility()" class="absolute right-3.5 top-3.5 text-slate-500 hover:text-slate-350">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+      <div class="mb-4">
+        <label class="portal-label">Nova Senha Corporativa</label>
+        <div class="portal-input-group">
+          <input id="new-password-input" type="password" placeholder="Digite ao menos 6 caracteres" class="portal-control" style="padding-right: 2.5rem;" required>
+          <button type="button" onclick="togglePasswordVisibility()" style="position: absolute; right: 1rem; top: 50%; transform: translateY(-50%); background: none; border: none; color: var(--text-muted); cursor: pointer; padding: 0;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 1rem; height: 1rem;"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
           </button>
         </div>
       </div>
-      <div class="flex gap-3 pt-2">
-        <a href="{{ route('login') }}" class="w-1/2 border border-slate-800 hover:bg-slate-850 text-slate-400 hover:text-slate-200 py-3 rounded-xl text-xs font-semibold uppercase tracking-wider transition-colors text-center cursor-pointer">Desistir</a>
-        <button type="submit" class="w-1/2 bg-emerald-600 hover:bg-emerald-500 text-white py-3 rounded-xl text-xs font-semibold uppercase tracking-wider transition-all cursor-pointer">Salvar Nova Senha</button>
+      <div class="d-flex gap-3 pt-2">
+        <a href="{{ route('login') }}" class="portal-btn-primary w-50" style="background: transparent; border: 1px solid var(--border); color: var(--text-secondary);">Desistir</a>
+        <button type="submit" class="portal-btn-primary w-50" style="background-color: var(--emerald-500);">Salvar Nova Senha</button>
       </div>
     </form>
 

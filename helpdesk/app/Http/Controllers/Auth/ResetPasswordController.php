@@ -1,5 +1,11 @@
 <?php
 
+// =============================================================================
+//  AUTENTICAÇÃO — RECUPERAÇÃO DE SENHA
+//  Responsável: Dupla 1 — Vitória e Camila
+//  Módulo: Usuários e Autenticação
+// =============================================================================
+
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
@@ -9,13 +15,25 @@ use Illuminate\Support\Facades\Hash;
 
 class ResetPasswordController extends Controller
 {
+    // -------------------------------------------------------------------------
+    // Exibe a tela de recuperação de senha
+    // -------------------------------------------------------------------------
     public function index()
     {
         return view('auth.reset-password');
     }
 
+    // -------------------------------------------------------------------------
+    // Ponto central de recuperação via AJAX — opera em três etapas:
+    //   1. "find"   → busca o usuário pelo e-mail e retorna a pergunta de segurança
+    //   2. "verify" → valida a resposta de segurança fornecida pelo usuário
+    //   3. "reset"  → redefine a senha após verificação bem-sucedida
+    // -------------------------------------------------------------------------
     public function ajax(Request $request)
     {
+        // ------------------------------------------------------------------
+        // Etapa 1: Localizar o usuário e retornar sua pergunta de segurança
+        // ------------------------------------------------------------------
         if ($request->action === 'find') {
             $user = User::where('email', $request->email)->first();
 
@@ -35,14 +53,17 @@ class ResetPasswordController extends Controller
 
             return response()->json([
                 'success' => true,
-                'user' => [
-                    'name' => $user->name,
-                    'email' => $user->email,
+                'user'    => [
+                    'name'             => $user->name,
+                    'email'            => $user->email,
                     'securityQuestion' => $user->security_question,
                 ],
             ]);
         }
 
+        // ------------------------------------------------------------------
+        // Etapa 2: Verificar a resposta de segurança informada
+        // ------------------------------------------------------------------
         if ($request->action === 'verify') {
             $user = User::where('email', $request->email)->first();
 
@@ -63,6 +84,9 @@ class ResetPasswordController extends Controller
             return response()->json(['success' => true]);
         }
 
+        // ------------------------------------------------------------------
+        // Etapa 3: Redefinir a senha com a nova senha informada
+        // ------------------------------------------------------------------
         if ($request->action === 'reset') {
             $user = User::where('email', $request->email)->first();
 
@@ -75,6 +99,7 @@ class ResetPasswordController extends Controller
 
             $newPassword = $request->newPassword ?? '';
 
+            // A nova senha precisa ter ao menos 6 caracteres
             if (strlen($newPassword) < 6) {
                 return response()->json([
                     'success' => false,
@@ -88,6 +113,7 @@ class ResetPasswordController extends Controller
             return response()->json(['success' => true]);
         }
 
+        // Ação desconhecida
         return response()->json([
             'success' => false,
             'message' => 'Ação inválida.',

@@ -1,18 +1,10 @@
--- =============================================================
---  HELPDESK – Banco de Dados MySQL
---  Compatível com o projeto Laravel enviado
---  Importe este arquivo no phpMyAdmin (XAMPP)
--- =============================================================
-
 CREATE DATABASE IF NOT EXISTS helpdesk
     CHARACTER SET utf8mb4
     COLLATE utf8mb4_unicode_ci;
 
 USE helpdesk;
 
--- -------------------------------------------------------------
--- 1. SETORES
--- -------------------------------------------------------------
+
 CREATE TABLE setores (
     id         BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     nome       VARCHAR(100) NOT NULL,
@@ -21,9 +13,7 @@ CREATE TABLE setores (
     updated_at TIMESTAMP NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- -------------------------------------------------------------
--- 2. CARGOS
--- -------------------------------------------------------------
+
 CREATE TABLE cargos (
     id         BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     nome       VARCHAR(100) NOT NULL,
@@ -32,9 +22,7 @@ CREATE TABLE cargos (
     updated_at TIMESTAMP NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- -------------------------------------------------------------
--- 3b. ROLES E PERMISSÕES  (Controle de Usuários)
--- -------------------------------------------------------------
+
 CREATE TABLE roles (
     id          BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     name        VARCHAR(100) NOT NULL,
@@ -62,10 +50,7 @@ CREATE TABLE permission_role (
     CONSTRAINT fk_pr_permission FOREIGN KEY (permission_id) REFERENCES permissions(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- -------------------------------------------------------------
--- 4. USERS  (tabela principal do Laravel Auth)
---    role: 'user' = solicitante | 'technician' = técnico | 'admin'
--- -------------------------------------------------------------
+
 CREATE TABLE users (
     id                BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     name              VARCHAR(255) NOT NULL,
@@ -89,18 +74,14 @@ CREATE TABLE users (
     CONSTRAINT fk_users_setor FOREIGN KEY (setor_id) REFERENCES setores(id) ON DELETE SET NULL,
     CONSTRAINT fk_users_cargo FOREIGN KEY (cargo_id) REFERENCES cargos(id) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
--- -------------------------------------------------------------
--- 4. PASSWORD RESET TOKENS  (exigido pelo Laravel)
--- -------------------------------------------------------------
+
 CREATE TABLE password_reset_tokens (
     email      VARCHAR(255) NOT NULL PRIMARY KEY,
     token      VARCHAR(255) NOT NULL,
     created_at TIMESTAMP NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- -------------------------------------------------------------
--- 5. SESSIONS  (SESSION_DRIVER=database no .env)
--- -------------------------------------------------------------
+=
 CREATE TABLE sessions (
     id            VARCHAR(255) NOT NULL PRIMARY KEY,
     user_id       BIGINT UNSIGNED NULL,
@@ -112,9 +93,7 @@ CREATE TABLE sessions (
     INDEX idx_sessions_last_activity (last_activity)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- -------------------------------------------------------------
--- 6. CACHE  (CACHE_STORE=database no .env)
--- -------------------------------------------------------------
+
 CREATE TABLE cache (
     `key`       VARCHAR(255) NOT NULL PRIMARY KEY,
     value       MEDIUMTEXT NOT NULL,
@@ -127,9 +106,7 @@ CREATE TABLE cache_locks (
     expiration  INT NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- -------------------------------------------------------------
--- 7. JOBS / QUEUE  (QUEUE_CONNECTION=database no .env)
--- -------------------------------------------------------------
+
 CREATE TABLE jobs (
     id           BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     queue        VARCHAR(255) NOT NULL,
@@ -164,9 +141,7 @@ CREATE TABLE failed_jobs (
     failed_at  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- -------------------------------------------------------------
--- 8. CATEGORIAS  (Dupla 4)
--- -------------------------------------------------------------
+
 CREATE TABLE categorias (
     id         BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     nome       VARCHAR(100) NOT NULL,
@@ -175,9 +150,7 @@ CREATE TABLE categorias (
     updated_at TIMESTAMP NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- -------------------------------------------------------------
--- 9. PRIORIDADES  (Dupla 4 – permite CRUD além do enum fixo)
--- -------------------------------------------------------------
+
 CREATE TABLE prioridades (
     id         BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     nome       VARCHAR(50)  NOT NULL,          -- Ex: Baixa, Média, Alta, Crítica
@@ -187,10 +160,7 @@ CREATE TABLE prioridades (
     updated_at TIMESTAMP NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- -------------------------------------------------------------
--- 10. TICKETS  (tabela central – Duplas 2 e 3)
---     Mantém compatibilidade exata com a migration do projeto
--- -------------------------------------------------------------
+
 CREATE TABLE tickets (
     id             BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     title          VARCHAR(255) NOT NULL,
@@ -201,7 +171,7 @@ CREATE TABLE tickets (
     user_id        BIGINT UNSIGNED NOT NULL,
     technician_id  BIGINT UNSIGNED NULL,
     solution       TEXT NULL,
-    resolved_at    TIMESTAMP NULL,           -- para cálculo de tempo médio
+    resolved_at    TIMESTAMP NULL,          
     created_at     TIMESTAMP NULL,
     updated_at     TIMESTAMP NULL,
     CONSTRAINT fk_tickets_user       FOREIGN KEY (user_id)       REFERENCES users(id)      ON DELETE CASCADE,
@@ -209,9 +179,7 @@ CREATE TABLE tickets (
     CONSTRAINT fk_tickets_categoria  FOREIGN KEY (categoria_id)  REFERENCES categorias(id) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- -------------------------------------------------------------
--- 11. TICKET HISTORIES  (linha do tempo – Duplas 2 e 3)
--- -------------------------------------------------------------
+
 CREATE TABLE ticket_histories (
     id          BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     ticket_id   BIGINT UNSIGNED NOT NULL,
@@ -224,9 +192,7 @@ CREATE TABLE ticket_histories (
     CONSTRAINT fk_th_user   FOREIGN KEY (user_id)   REFERENCES users(id)   ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- -------------------------------------------------------------
--- 12. TICKET ATTACHMENTS  (upload de anexos – Dupla 2)
--- -------------------------------------------------------------
+
 CREATE TABLE ticket_attachments (
     id          BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     ticket_id   BIGINT UNSIGNED NOT NULL,
@@ -238,10 +204,7 @@ CREATE TABLE ticket_attachments (
     updated_at  TIMESTAMP NULL,
     CONSTRAINT fk_ta_ticket FOREIGN KEY (ticket_id) REFERENCES tickets(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- -------------------------------------------------------------
--- 13. COMENTARIOS  (comunicação no chamado – Dupla 2)
--- -------------------------------------------------------------
+=
 CREATE TABLE comentarios (
     id          BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     ticket_id   BIGINT UNSIGNED NOT NULL,
@@ -253,9 +216,7 @@ CREATE TABLE comentarios (
     CONSTRAINT fk_com_user   FOREIGN KEY (user_id)   REFERENCES users(id)   ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- -------------------------------------------------------------
--- 14. BASE DE CONHECIMENTO – FAQs  (Dupla 4 – Opcional)
--- -------------------------------------------------------------
+
 CREATE TABLE faqs (
     id           BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     pergunta     TEXT NOT NULL,
@@ -266,9 +227,7 @@ CREATE TABLE faqs (
     CONSTRAINT fk_faq_categoria FOREIGN KEY (categoria_id) REFERENCES categorias(id) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- -------------------------------------------------------------
--- 15. BASE DE CONHECIMENTO – ARTIGOS  (Dupla 4 – Opcional)
--- -------------------------------------------------------------
+
 CREATE TABLE artigos (
     id           BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     titulo       VARCHAR(255) NOT NULL,
@@ -282,17 +241,15 @@ CREATE TABLE artigos (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- =============================================================
---  DADOS INICIAIS (Seeds)
+--  DADOS INICIAIS 
 -- =============================================================
 
--- Setores
 INSERT INTO setores (nome, descricao, created_at, updated_at) VALUES
 ('TI',         'Tecnologia da Informação',       NOW(), NOW()),
 ('RH',         'Recursos Humanos',               NOW(), NOW()),
 ('Financeiro', 'Setor Financeiro',               NOW(), NOW()),
 ('Operações',  'Operações e Logística',          NOW(), NOW());
 
--- Cargos
 INSERT INTO cargos (nome, descricao, created_at, updated_at) VALUES
 ('Analista',          'Analista de sistemas / processos', NOW(), NOW()),
 ('Técnico',           'Técnico de suporte',               NOW(), NOW()),
@@ -300,7 +257,7 @@ INSERT INTO cargos (nome, descricao, created_at, updated_at) VALUES
 ('Desenvolvedor',     'Desenvolvedor de software',        NOW(), NOW()),
 ('Administrador',     'Administrador do sistema',         NOW(), NOW());
 
--- Categorias
+
 INSERT INTO categorias (nome, descricao, created_at, updated_at) VALUES
 ('Hardware',   'Problemas com equipamentos físicos', NOW(), NOW()),
 ('Software',   'Erros em programas e sistemas',      NOW(), NOW()),
@@ -308,25 +265,24 @@ INSERT INTO categorias (nome, descricao, created_at, updated_at) VALUES
 ('Acesso',     'Senhas, permissões e acessos',       NOW(), NOW()),
 ('Outros',     'Demais solicitações',                NOW(), NOW());
 
--- Prioridades
+
 INSERT INTO prioridades (nome, nivel, cor, created_at, updated_at) VALUES
 ('Baixa',    1, '#28a745', NOW(), NOW()),
 ('Média',    2, '#ffc107', NOW(), NOW()),
 ('Alta',     3, '#fd7e14', NOW(), NOW()),
 ('Crítica',  4, '#dc3545', NOW(), NOW());
 
--- Usuários de exemplo
--- Senha do admin: 12345678 (rodar php artisan helpdesk:setup após importar)
+
 INSERT INTO users (name, email, role, status, profile, phone, address, password, security_question, security_answer, contato, setor_id, cargo_id, role_id, created_at, updated_at) VALUES
 ('Administrador', 'admin@helpdesk.com', 'admin', 'Ativo', 'Admin', '(11) 99999-0001', 'Presidente Prudente/SP', '$2y$12$wKLUX7b6mxX8m2FzOVtMDO7FtYfQlt9dNXs7b4alvldh1uM1/71H.', 'Qual o nome da sua primeira escola?', NULL, '(11) 99999-0001', 1, 5, NULL, NOW(), NOW()),
 ('Carlos Técnico', 'tecnico@helpdesk.com', 'technician', 'Ativo', 'Técnico', '(11) 99999-0002', 'Presidente Prudente/SP', '$2y$12$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '(11) 99999-0002', 1, 2, NULL, NOW(), NOW()),
 ('Maria Usuária', 'usuario@helpdesk.com', 'user', 'Ativo', 'Usuário', '(11) 99999-0003', 'Presidente Prudente/SP', '$2y$12$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '(11) 99999-0003', 2, 1, NULL, NOW(), NOW());
 
 
--- Chamado de exemplo
+
 INSERT INTO tickets (title, description, status, priority, categoria_id, user_id, technician_id, created_at, updated_at) VALUES
 ('Computador não liga', 'O computador da recepção não está ligando desde hoje cedo.', 'open', 'high', 1, 3, NULL, NOW(), NOW());
 
--- Histórico do chamado de exemplo
+
 INSERT INTO ticket_histories (ticket_id, user_id, action, description, created_at, updated_at) VALUES
 (1, 3, 'Chamado aberto', 'Solicitante abriu o chamado.', NOW(), NOW());

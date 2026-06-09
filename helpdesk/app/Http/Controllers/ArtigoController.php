@@ -1,5 +1,11 @@
 <?php
 
+// =============================================================================
+//  ARTIGOS DA BASE DE CONHECIMENTO
+//  Responsável: Dupla 2 — Gustavo e Rafael
+//  Módulo: Abertura e Comunicação
+// =============================================================================
+
 namespace App\Http\Controllers;
 
 use App\Models\Artigo;
@@ -9,13 +15,28 @@ use Illuminate\Support\Facades\Auth;
 
 class ArtigoController extends Controller
 {
-    public function index()
+    // -------------------------------------------------------------------------
+    // Lista os artigos disponíveis na base de conhecimento
+    // Opcionalmente filtra por categoria se o parâmetro for passado
+    // -------------------------------------------------------------------------
+    public function index(Request $request)
     {
-        $artigos = Artigo::with(['categoria', 'autor'])->orderByDesc('created_at')->get();
+        $query = Artigo::with(['categoria', 'autor']);
 
-        return view('artigos.index', compact('artigos'));
+        // Filtro por categoria
+        if ($request->filled('categoria')) {
+            $query->where('categoria_id', $request->categoria);
+        }
+
+        $artigos = $query->orderByDesc('created_at')->get();
+        $categorias = Categoria::orderBy('nome')->get();
+
+        return view('artigos.index', compact('artigos', 'categorias'));
     }
 
+    // -------------------------------------------------------------------------
+    // Exibe o formulário para criação de um novo artigo
+    // -------------------------------------------------------------------------
     public function create()
     {
         $categorias = Categoria::orderBy('nome')->get();
@@ -23,21 +44,29 @@ class ArtigoController extends Controller
         return view('artigos.create', compact('categorias'));
     }
 
+    // -------------------------------------------------------------------------
+    // Salva o novo artigo na base de conhecimento
+    // O autor é automaticamente preenchido com o usuário logado
+    // -------------------------------------------------------------------------
     public function store(Request $request)
     {
-        $data = $request->validate([
-            'titulo' => 'required|string|max:255',
-            'conteudo' => 'required|string',
+        $dados = $request->validate([
+            'titulo'       => 'required|max:255',
+            'conteudo'     => 'required',
             'categoria_id' => 'nullable|exists:categorias,id',
         ]);
 
-        $data['author_id'] = Auth::id();
+        $dados['author_id'] = Auth::id();
 
-        Artigo::create($data);
+        Artigo::create($dados);
 
-        return redirect()->route('artigos.index')->with('sucesso', 'Artigo publicado!');
+        return redirect()->route('artigos.index')
+            ->with('sucesso', 'Artigo publicado com sucesso!');
     }
 
+    // -------------------------------------------------------------------------
+    // Exibe um artigo específico para leitura detalhada
+    // -------------------------------------------------------------------------
     public function show(Artigo $artigo)
     {
         $artigo->load(['categoria', 'autor']);
@@ -45,6 +74,9 @@ class ArtigoController extends Controller
         return view('artigos.show', compact('artigo'));
     }
 
+    // -------------------------------------------------------------------------
+    // Exibe o formulário de edição de um artigo existente
+    // -------------------------------------------------------------------------
     public function edit(Artigo $artigo)
     {
         $categorias = Categoria::orderBy('nome')->get();
@@ -52,23 +84,31 @@ class ArtigoController extends Controller
         return view('artigos.edit', compact('artigo', 'categorias'));
     }
 
+    // -------------------------------------------------------------------------
+    // Atualiza o conteúdo e as informações de um artigo
+    // -------------------------------------------------------------------------
     public function update(Request $request, Artigo $artigo)
     {
-        $data = $request->validate([
-            'titulo' => 'required|string|max:255',
-            'conteudo' => 'required|string',
+        $dados = $request->validate([
+            'titulo'       => 'required|max:255',
+            'conteudo'     => 'required',
             'categoria_id' => 'nullable|exists:categorias,id',
         ]);
 
-        $artigo->update($data);
+        $artigo->update($dados);
 
-        return redirect()->route('artigos.index')->with('sucesso', 'Artigo atualizado!');
+        return redirect()->route('artigos.show', $artigo)
+            ->with('sucesso', 'Artigo atualizado com sucesso!');
     }
 
+    // -------------------------------------------------------------------------
+    // Remove permanentemente um artigo da base de conhecimento
+    // -------------------------------------------------------------------------
     public function destroy(Artigo $artigo)
     {
         $artigo->delete();
 
-        return redirect()->route('artigos.index')->with('sucesso', 'Artigo removido!');
+        return redirect()->route('artigos.index')
+            ->with('sucesso', 'Artigo removido com sucesso!');
     }
 }
